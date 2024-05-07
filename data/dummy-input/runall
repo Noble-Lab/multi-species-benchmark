@@ -45,34 +45,26 @@ set -o xtrace
 
 rootdir=wnoble@nexus.gs.washington.edu:/net/noble/vol1/data/crux-datasets/2017tran-denovo
 
-mkdir -p genomes
-for species in Apis-mellifera \
-                   Candidatus-endoloripes \
-                   Saccharomyces-cerevisiae ; do
-    scp $rootdir/genomes/$species.fasta genomes
-done
-
 mkdir -p Apis-mellifera
-scp $rootdir/genomes/Apis-mellifera/BC-2.mgf \
-    Apis-mellifera
-scp $rootdir/genomes/Apis-mellifera/M-3.mgf \
-    Apis-mellifera
-scp $rootdir/genomes/Apis-mellifera/S-1.mgf \
+scp $rootdir/Apis-mellifera/BC-2.mgf \
+    $rootdir/Apis-mellifera/M-3.mgf \
+    $rootdir/Apis-mellifera/S-1.mgf \
     Apis-mellifera
 
 mkdir -p Candidatus-endoloripes
-scp $rootdir/genomes/Candidatus-endoloripes/Run1_82-g1_2000ng.mgf \
-    Candidatus-endoloripes
-scp $rootdir/genomes/Candidatus-endoloripes/Run1_85-g1_2000ng.mgf \
-    Candidatus-endoloripes
-scp $rootdir/genomes/Candidatus-endoloripes/Run2_83-g1_2000ng.mgf \
+scp $rootdir/Candidatus-endoloripes/Run1_82-g1_2000ng.mgf \
+    $rootdir/Candidatus-endoloripes/Run1_85-g1_2000ng.mgf \
+    $rootdir/Candidatus-endoloripes/Run2_83-g1_2000ng.mgf \
     Candidatus-endoloripes
 
 mkdir -p Saccharomyces-cerevisiae
-scp $rootdir/genomes/Saccharomyces-cerevisiae/BY_04_NaN3_2.mgf \
-    Saccharomyces-cerevisiae
-scp $rootdir/genomes/Saccharomyces-cerevisiae/delPBP1_DB_NaN3.3.mgf \
-    Saccharomyces-cerevisiae
-scp $rootdir/genomes/Saccharomyces-cerevisiae/delPBP1_SM_1.mgf \
+scp $rootdir/Saccharomyces-cerevisiae/BY_04_NaN3_2.mgf \
+    $rootdir/Saccharomyces-cerevisiae/delPBP1_DB_NaN3_3.mgf \
+    $rootdir/Saccharomyces-cerevisiae/delPBP1_SM_1.mgf \
     Saccharomyces-cerevisiae
 
+mkdir -p genomes
+scp $rootdir/genomes/Apis-mellifera.fasta \
+    $rootdir/genomes/Candidatus-endoloripes.fasta \
+    $rootdir/genomes/Saccharomyces-cerevisiae.fasta \
+    genomes
