@@ -46,13 +46,22 @@ set -o pipefail
 set -o errexit 
 set -o xtrace
 
+# The location of the Crux binary.
 CRUX=~/proj/crux/crux-4.2.Darwin.x86_64/bin/crux
 
+# The location of some of the Python scripts.
 PROJ_BIN=~/proj/2021_melih_ms-chimera/bin
 
+# The location of the input MGF and FASTA files.
 root=../../../data/dummy-input
+
+# A tab-delimited file specifying the structure of the data.
 driver=$root/three-species.txt
-benchmark=three-species
+
+# Name of primary output directory.
+benchmark1=three-species-overlap
+benchmark2=three-species
+benchmark3=three-species-balanced
 
 for mgf_dir in $root/{Api,Can,Sac}*; do
     species=`basename $mgf_dir`
@@ -96,10 +105,10 @@ for mgf_dir in $root/{Api,Can,Sac}*; do
     fi
 
     # Annotate all the MGFs.
-    mkdir -p $benchmark-overlap/$species
+    mkdir -p $benchmark1/$species
     for mgf in $mgf_dir/*.mgf; do
         basename=`basename $mgf`
-        annotated=$benchmark-overlap/$species/$basename
+        annotated=$benchmark1/$species/$basename
         if [[ ! -e $annotated ]]; then
             python3 $PROJ_BIN/annotate_mgf.py \
                 0.01 \
@@ -111,7 +120,6 @@ for mgf_dir in $root/{Api,Can,Sac}*; do
 
         num_psms=`grep "BEGIN IONS" $annotated | wc -l` || true
         # https://stackoverflow.com/questions/18668556/how-can-i-compare-numbers-in-bash
-#        if (( $num_psms < 100 )); then
         if [[ $num_psms -lt 100 ]]; then
             echo "Deleting $basename with $num_psms PSMs."
             rm $annotated
@@ -119,44 +127,27 @@ for mgf_dir in $root/{Api,Can,Sac}*; do
 
     done
 done
+../../../bin/summarize_benchmark.py \
+    --data_dir $root \
+    --driver_filename $driver \
+    --benchmark_dir $benchmark1 \
+    --root $benchmark1
 
-$PROJ_BIN/clean-benchmark.py $benchmark-overlap $benchmark
+# Remove peptide overlap.
+$PROJ_BIN/clean-benchmark.py $benchmark1 $benchmark2
+../../../bin/summarize_benchmark.py \
+    --data_dir $root \
+    --driver_filename $driver \
+    --benchmark_dir $benchmark1 \
+    --root $benchmark2
 
-mkdir -p stats
-summary_file=summary.txt
-echo -e "Species\t#raw\t#mgf\t#spectra\t#PSMs\t#peptides\tprecursor\tfragment" \
-    > $summary_file
-
-# Same order as Table S2.
-for species in `awk '{print $2}' $driver`; do
-    echo -n $species >> $summary_file
-    for stat in raw mgf spectra psms peptides precursor fragment; do
-
-        # Compute this stat, if needed.
-        stat_file=stats/$species.$stat.txt
-        if [[ ! -e $stat_file ]]; then
-            if [[ $stat == "raw" ]]; then
-                ls $root/$species/*.mgf | wc -l > $stat_file
-            elif [[ $stat == "mgf" ]]; then
-                ls $benchmark/$species/*.mgf | wc -l > $stat_file
-            elif [[ $stat = "spectra" ]]; then
-                grep "BEGIN IONS" $root/$species/*.mgf | wc -l > $stat_file
-            elif [[ $stat = "psms" ]]; then
-                grep "BEGIN IONS" $benchmark/$species/*.mgf | wc -l \
-                    > $stat_file
-            elif [[ $stat = "peptides" ]]; then
-                cat $benchmark/$species/peptides.txt | wc -l > $stat_file
-            elif [[ $stat = "precursor" ]]; then
-                grep $species $driver | awk '{print $3}' > $stat_file
-            elif [[ $stat = "fragment" ]]; then
-                grep $species $driver | awk '{print $4}' > $stat_file
-            fi
-        fi
-        awk '{printf("\t%s", $1)}' $stat_file >> $summary_file
-    done
-    echo "" >> $summary_file
-done
-
-~/proj/2002_wnoble_utilities/tsv2html.py $summary_file > summary.html
-
+# Approximately balance size of subsets.
+../../../bin/downsample_benchmark.py --num_spectra 22000 \
+                                     --root $benchmark3 \
+                                     $benchmark2/* 
+../../../bin/summarize_benchmark.py \
+    --data_dir $root \
+    --driver_filename $driver \
+    --benchmark_dir $benchmark3 \
+    --root $benchmark3
 

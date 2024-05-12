@@ -1,3 +1,3 @@
-PXD004536  Candidatus-endoloripes	20	0.05
-PXD003868  Saccharomyces-cerevisiae	20	0.05
-PXD004467  Apis-mellifera	20	0.05
+PXD004536	Candidatus-endoloripes	20	0.05
+PXD003868	Saccharomyces-cerevisiae	20	0.05
+PXD004467	Apis-mellifera	20	0.05

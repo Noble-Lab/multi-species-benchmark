@@ -30,22 +30,27 @@
 
 \section*{Background \& Summary}
 
-Similar to many other fields of scientific inquiry, the analysis of proteomics tandem mass spectrometry data is being revolutionized by the development of deep learning analysis methods.   For example, deep learning has been used to perform large-scale embedding and clustering of peptide mass spectra \cite{bittremieux2022learned}, predict fragment ion intensities \cite{zhou2017pdeep, gessulat2019prosit, tiwary2019high}, predict peptide liquid chromatography retention times \fixme{\cite{XXX}}, identify peptide features in precursor (MS1) spectra \cite{zohora2019deepiso, zohora2021deep}, and perform \textit{de novo} peptide sequencing \cite{tran2017denovo, qiao2021computationally, yilmaz2022denovo, liu2023accurate, mao2023mitigating, klaproth2024deep, lee2024bidirectional}.
+\textit{De novo} sequencing of proteomics tandem mass spectrometry data, in which observed fragmentation spectra are translated into corresponding peptide sequences, has been an open challenge for more than 40 years \cite{sakurai1984paas}.  Recently, as in many other areas of science, considerable progress toward solving this challenge has been made using deep learning, in which multi-layer neural networks with millions of parameters are trained to generate peptide sequences from observed spectra.  The first such deep learning method, DeepNovo \cite{tran2017denovo}, has been followed by at least 22 additional publications (reviewed in \cite{XXX}).
 
-Training and validation data for these models are typically obtained from two types of sources: public repositories of proteomics mass spectrometry data, such as PRIDE \cite{martens2005pride} and MassIVE \fixme{\cite{XXX}}, or the ProteomeTools repository of data derived from synthesized peptide seuqences \cite{zolg2017building}.  In the former case, further processing of data from the public repositories may be necessary to create a consistently annotated collection of spectra, as was done for the MassIVE-KB dataset of annotated human spectra \cite{wang2018assembling}.
+Because deep learning models are large, they typically require a correspondingly large amount of data to train.  \fixme{Mention how many parameters some important models have, and how much data they were trained on.}
 
-Here we describe a large collections of proteomics tandem mass spectrometry data that have been collated and formatted for use in training and validating large-scale machine learning models.  All of the spectra in these datasets are MS2 spectra, meaning that each spectrum nominally represents peaks produced from the fragmention of a single peptide species.  Thus, the primary data object is a peptide-spectrum match (PSM), consisting of a single MS2 spectrum and its associated peptide sequence and charge state.  The second dataset, the nine-species benchmark, is derived from the PRIDE repository and consists of 2.8 million PSMs and 13 million unannotated spectra from nine different species.  A version of this benchmark was originally described in the DeepNovo paper \cite{trans2017denovo}.  The version reported here was re-created from the original PRIDE datasets using a different search engine, a wider range of post-translational modifications, and enforcing segregation of peptides between the different species in the benchmark.  This dataset has been used in the training and validation of the Casanovo \textit{de novo} peptide sequencing model \cite{yilmaz2022denovo}.
+\fixme{Talk about complications.  Labeling strategy.  Train/test leakage.  Batch effects.  Quality of the spectra.}
+
+
 
 \section*{Methods}
 
-\subsection*{Nine-species benchmark}
+\subsection*{Data sets}
 
-\fixme{I need to rewrite this paragraph to avoid self-plagiarism. ---Bill}
-\begin{sloppypar}
+\fixme{Describe each study}
+
 We created a new version of the nine-species benchmark originally described by Tran {\em et al.} \cite{tran2017denovo}
 To do so, we downloaded the RAW files from the same nine PRIDE projects (Supplementary Table~\ref{tab:benchmark}) and converted them to MGF format using the ThermoRawFileParser v1.3.4.
 We also downloaded the corresponding nine Uniprot reference proteomes and constructed a Tide index for each one, using Crux version 4.1.
 For one species (\textit{Vigna mungo}), no reference proteome is available, so we used the proteome of the closely related species \textit{Vigna radiata}.
+
+\subsection*{Assigning peptide labels to spectra}
+
 We specified Cys carbamidomethylation as a static modification and allowed for the following variable modifications: Met oxidation, Asn deamidation, Gln deamidation, N-term acetylation, N-term carbamylation, N-term NH$_{3}$ loss, and the combination of N-term carbamylation and NH$_{3}$ loss by using the tide-index options {\tt --mods-spec 1M+15.994915,\allowbreak 1N+0.984016,\allowbreak 1Q+0.984016 --nterm-peptide-mods-spec 1X+42.010565,\allowbreak 1X+43.005814,\allowbreak 1X-17.026549,\allowbreak 1X+25.980265 --max-mods 3}.
 Note that one of the nine experiments (\textit{Mus musculus}) was performed using SILAC labeling, but we searched without SILAC modifications and hence include in the benchmark only PSMs from unlabeled peptides.
 Each index also contains a shuffled decoy peptide corresponding to each target peptide.
@@ -54,6 +59,9 @@ We used XCorr scoring with Tailor calibration \cite{sulimov2020tailor}, and we a
 All search results were then analyzed jointly per species using the Crux implementation of Percolator, with default parameters.
 For the benchmark, we retained all PSMs with Percolator q value $<$ 0.01.
 We identified 13 MGF files with fewer than 100 accepted PSMs, and we eliminated all of these PSMs from the benchmark.
+
+\subsection*{Avoiding train/test leakage}
+
 We then post-processed the PSMs to eliminate peptides that are shared between species.
 Among the 229,984 unique peptides, we identified 3797 (1.7\%) that occur in more than one species.
 For each such peptide, we selected one of the associated species at random and then eliminated all PSMs containing that peptide in other species.
@@ -63,8 +71,10 @@ same.  Hence, if a given peptide appears in more than one species,
 then that peptide, including all its modified forms, is randomly
 assigned to a single species and eliminated from the others.
 The final benchmark dataset consists of 2.8 million PSMs drawn from 343 RAW files.
-The revised nine-species benchmark is available on MassIVE at \url{https://doi.org/doi:10.25345/C52V2CK8J}.
-\end{sloppypar}
+
+\subsection*{Balancing the benchmark}
+
+At this stage, the benchmark is quite imbalanced, in the sense that some species have a much larger number of associated PSMs.  We therefore used a random downsampling procedure to produce a benchmark that is more evenly balanced across species.  Among the nine species, the one with the fewest PSMs is \textit{Mus musculus}, with 25,541.  Downsampling all of the other eight species to have 25,000 PSMs would reduce the size of the dataset from 2.8 million PSMs to 225,000---a reduction of 92\%.  To avoid producing such a small dataset, we therefore opted to downsample each dataset to approximately 100,000 PSMs.  This approach yields a slight imbalance, because three species have fewer than 100,000 PSMs (44,604 for \textit{H.\ sapiens} and 82,290 for \textit{Candidatus endoloripes}), while retaining a larger percentage of the original data.  Our downsampling procedure involved randomly permuting the order of the MGF files for each species and then selecting the files in order until at least 100,000 PSMs have been accepted.  The final, balanced benchmark dataset consists of \fixme{XXX} PSMs.
 
 \section*{Data Records}
 
@@ -77,11 +87,12 @@ The revised nine-species benchmark is available on MassIVE at \url{https://doi.o
 
 \section*{Technical Validation}
 
+\fixme{False discovery rate curves}
+
 \section*{Usage Notes (optional)}
 
 \section*{Code Availability}
 
-\fixme{I need to cobble together a couple of scripts to generate the pipeline, based on \url{https://github.com/Noble-Lab/2021_melih_ms-chimera/blob/main/results/bill/2024-02-13deepnovo9/runall}, \url{https://github.com/Noble-Lab/2021_melih_ms-chimera/blob/main/results/bill/2024-02-13deepnovo9/summarize}, \url{https://github.com/Noble-Lab/2021_melih_ms-chimera/blob/main/results/bill/2024-02-13deepnovo9/deepnovo.txt}, \url{https://github.com/Noble-Lab/2021_melih_ms-chimera/blob/main/results/bill/2023-01-19deepnovo7/runall}, and \url{https://github.com/Noble-Lab/2021_melih_ms-chimera/blob/main/bin/clean-benchmark.py}, \url{https://github.com/Noble-Lab/2021_melih_ms-chimera/blob/main/bin/annotate_mgf.py}. ---Bill}
 
 \section*{References}
 
