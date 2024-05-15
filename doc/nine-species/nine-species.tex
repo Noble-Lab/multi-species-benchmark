@@ -42,9 +42,24 @@ Because deep learning models are large, they typically require a correspondingly
 
 \subsection*{Data sets}
 
-\fixme{Describe each study}
-
 We created a new version of the nine-species benchmark originally described by Tran {\em et al.} \cite{tran2017denovo}
+
+\begin{enumerate}
+\item Paiva \textit{et al.}\ investigated the protein expression response of the cowpea plant (\textit{Vigna unguiculata}) to infection by \textit{Cowpsea severe mosaic virus} (CSMV) by carrying out label-free proteomic analysis of cowpea leaves that were inoculated with CSMV compared to mock inoculation controls \cite{paiva2016label}.
+\item Nevo \textit{et al.}\ studied a rare autosomal recessive lysosomal storage disorder, cystinosis, by carrying out SILAC proteomic analysis of engineered mouse cell lines that harbor a known pathenogenic mutation of the causative gene, \textit{CTNS} \cite{nevo2017impact}.
+\item Cassidy \textit{et al.}\ evaluated two different analytical approaches for carrying out full proteome analysis while identifying short open reading frames: high/low pH reversed phase LC-MS bottom-up approach and a semi-top-down strategy involving separation of proteins a GelFree system followed by digestion and LC-MS analysis \cite{cassidy2016combination}. The experiments were carried out using the methane producing archaeon \textit{Methanosarcina mazei}.
+\item Reuss \textit{et al.}\ carried out proteomic analyses on a series of minimized strains of the model bacterium, \textit{Bacillus subtilis}, with genomes reduced by $\sim$36\% \cite{reuss2017large}.
+\item Petersen \textit{et al.}\ performed proteomic analysis of \textit{Candidatus endoloripes}, which are bacterial symbionts of the \textit{Lucinidae} family of marine bivalves \cite{petersen2016chemosynthetic}.
+\item Mata \textit{et al.}\ characterized the proteome of the tomato pericarp at its ripe red stage \cite{mata2017depth}.
+\item Seidel \textit{et al.}\ analyzed the global proteomic stress response in wildtype and two yeast knockout strains for the gene PBP1  \cite{seidel2017quantitative}.
+\item Hu \textit{et al.}\ studied honeybees that exhibit a suite of behaviors (\textit{Varroa} sensitive hygiene---VSH) associated with infection with the \textit{Varroa destructor} virus \cite{hu2016proteome}.  Proteomic analysis was carried out on mushroom bodies and antennae of adult honeybees with and without VSH.
+\item Cypryck \textit{et al.} characterized extracellular vesicles released from human primary macrophages after infection with influenza A viruses \cite{cypryk2017proteomic}.
+\end{enumerate}
+All nine studies were performed using a Thermo Scientific Q Exactive mass spectrometer.
+
+% The PXD entry says the species is "Vigna mungo (Rice bean) (Black gram); NCBI TaxID: 3915;" but the paper talks about Vinga unguiculata.
+
+
 To do so, we downloaded the RAW files from the same nine PRIDE projects (Supplementary Table~\ref{tab:benchmark}) and converted them to MGF format using the ThermoRawFileParser v1.3.4.
 We also downloaded the corresponding nine Uniprot reference proteomes and constructed a Tide index for each one, using Crux version 4.1.
 For one species (\textit{Vigna mungo}), no reference proteome is available, so we used the proteome of the closely related species \textit{Vigna radiata}.
@@ -78,12 +93,15 @@ At this stage, the benchmark is quite imbalanced, in the sense that some species
 
 \section*{Data Records}
 
-\fixme{
+The dataset contains files resulting from various stages of the benchmark:
 \begin{itemize}
-\item Annotated MGF files for the nine-species benchmark. \fixme{Do we provide them separately by run, or just record in the MGF records what run each one came from?}
-\item Intermediate files for nine-species (genome FASTA, tide-search results, Percolator files).
+\item Spectrum files in MGF format, produced by msconvert.
+\item Reference proteome files in FASTA format, downloaded from Uniprot.
+\item Search results files for both targets and decoys, in tab-delimited format, produced by Tide.
+\item PSM-level Percolator results files for targets, in tab-delimited format.
+\item Annotated MGF files for all three versions of the benchmark (overlap, main, and balanced).
 \end{itemize}
-}
+Also included are log files for the steps of the analysis pipeline carried out using Crux \cite{park2008rapid} (Tide indexing, Tide search, and Percolator).
 
 \section*{Technical Validation}
 
