@@ -26,6 +26,26 @@ def count_lines(filename):
     with open(filename, "r") as my_file:
         return(len(my_file.readlines()))
 
+def clean_peptide (peptide):
+    "Remove PTMs."
+
+    return re.sub(r"[0-9\.\[\]]+", "", peptide)
+    
+
+def count_peptides(mgf_filenames):
+    """Count number of distinct peptides in a set of MGF files.  Eliminates
+    modifications first."""
+
+    peptides = {} # Key = peptide, value = True
+    for mgf_filename in mgf_filenames:
+        with open(mgf_filename, "r") as mgf_file:
+            for line in mgf_file:
+                if line.startswith("SEQ="):
+                    peptides[clean_peptide(line.rstrip().split("=")[1])] = True
+
+    return len(peptides)
+                            
+    
 ###########################################################################
 # MAIN
 ###########################################################################
@@ -58,6 +78,9 @@ def main():
     # Gather up all the statistics
     for species in all_species:
         for stat in column_names:
+
+            mgf_list = 
+            
             if stat == "#raw":
                 output[stat].append(
                     len(glob.glob(os.path.join(args.data_dir,
@@ -84,7 +107,10 @@ def main():
                 try:
                     num_peptides = count_lines(peptide_filename)
                 except:
-                    num_peptides = 0
+                    num_peptides = count_peptides(
+                        glob.glob(os.path.join(args.benchmark_dir,
+                                               species, "*.mgf"))
+                    )
                 output[stat].append(num_peptides)
 
     output["precursor"] = list(driver[2])
