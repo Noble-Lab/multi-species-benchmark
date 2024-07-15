@@ -1,12 +1,12 @@
 all: nine-species.pdf
 
 %.pdf: %.tex
-	pdflatex $*.tex
+	xelatex $*.tex
 	if ( grep -q bibliographystyle $*.tex ) ; then \
 		bibtex $* ; \
 		pdflatex $*.tex ; \
 	fi
-	pdflatex $*.tex
+	xelatex $*.tex
 
 %.pdf: %.fig
 	fig2dev -L pdftex -p dummyarg $*.fig $*.pdf
