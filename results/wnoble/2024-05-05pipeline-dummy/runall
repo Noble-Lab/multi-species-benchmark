@@ -48,6 +48,9 @@ set -o xtrace
 
 # The location of the Crux binary.
 CRUX=~/proj/crux/crux-4.2.Darwin.x86_64/bin/crux
+if [[ ! -e $CRUX ]]; then
+    CRUX=~/proj/crux/crux-4.2.Linux.x86_64/bin/crux
+fi
 
 # The location of some of the Python scripts.
 PROJ_BIN=~/proj/2021_melih_ms-chimera/bin

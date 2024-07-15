@@ -23,8 +23,10 @@ def count_spectra(mgf_filenames):
     return return_value
 
 def count_lines(filename):
-    with open(filename, "r") as my_file:
-        return(len(my_file.readlines()))
+    if os.path.exists(filename):
+        with open(filename, "r") as my_file:
+            return(len(my_file.readlines()))
+    return 0
 
 ###########################################################################
 # MAIN
@@ -49,52 +51,48 @@ def main():
     driver = pandas.read_csv(args.driver_filename, sep="\t", header=None)
     all_species = list(driver[1])
 
-    column_names = ["#raw", "#mgf", "#spectra", "#PSMs", "#peptides"]
     output = {} # Key = column name, value = list of entries.
     output["species"] = all_species
+    column_names = ["#raw", "#mgf", "#spectra", "#PSMs", "#peptides"]
     for stat in column_names:
         output[stat] = []
 
     # Gather up all the statistics
     for species in all_species:
-        for stat in column_names:
-            if stat == "#raw":
-                output[stat].append(
-                    len(glob.glob(os.path.join(args.data_dir,
-                                               species, "*.mgf")))
-                )
-            elif stat == "#mgf":
-                output[stat].append(
-                    len(glob.glob(os.path.join(args.benchmark_dir,
-                                               species, "*.mgf")))
-                )
-            elif stat == "#spectra":
-                output[stat].append(
-                    count_spectra(glob.glob(os.path.join(args.data_dir,
-                                                         species, "*.mgf")))
-                )
-            elif stat == "#PSMs":
-                output[stat].append(
-                    count_spectra(glob.glob(os.path.join(args.benchmark_dir,
-                                                         species, "*.mgf")))
-                )
-            elif stat == "#peptides":
-                peptide_filename = os.path.join(args.benchmark_dir,
-                                                species, "peptides.txt")
-                try:
-                    num_peptides = count_lines(peptide_filename)
-                except:
-                    num_peptides = 0
-                output[stat].append(num_peptides)
+        print(species, file=sys.stderr)
+        output["#raw"].append(
+            len(glob.glob(os.path.join(args.data_dir, species, "*.mgf")))
+        )
+        output["#mgf"].append(
+            len(glob.glob(os.path.join(args.benchmark_dir, species, "*.mgf")))
+        )
+        output["#spectra"].append(
+            count_spectra(glob.glob(os.path.join(args.data_dir,
+                                                 species, "*.mgf")))
+        )
+        output["#PSMs"].append(
+            count_spectra(glob.glob(os.path.join(args.benchmark_dir,
+                                                 species, "*.mgf")))
+        )
+        output["#peptides"].append(
+            count_lines(os.path.join(args.benchmark_dir,
+                                     species, "peptides.txt"))
+        )
 
     output["precursor"] = list(driver[2])
     output["fragment"] = list(driver[3])
+
+    # Add totals.
+    output["species"].append("total")
+    for stat in column_names:
+        output[stat].append(sum(output[stat]))
+    output["precursor"].append("")
+    output["fragment"].append("")
 
     # Convert output to a dataframe.
     output_df = pandas.DataFrame(output)
     output_df.to_csv(f"{args.root}.txt", index=False, sep="\t")
     output_df.to_html(f"{args.root}.html", index=False)
-                
 
 if __name__ == "__main__":
     main()
