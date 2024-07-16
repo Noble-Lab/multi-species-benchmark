@@ -6,6 +6,7 @@ import argparse
 import pandas
 import os
 import glob
+import re
 
 DESCRIPTION = """Write text and HTML tables describing a given
 benchmark dataset."""
@@ -82,8 +83,9 @@ def main():
         print(species, file=sys.stderr)
 
         data_mgfs = glob.glob(os.path.join(args.data_dir, species, "*.mgf"))
-        benchmark_mgfs = glob.glob(os.path.join(args.benchmark_dir, species,
-                                                "*.mgf"))
+        benchmark_mgfs = glob.glob(
+            os.path.join(args.benchmark_dir, species, "*.mgf")
+        )
         
         output["#raw"].append(len(data_mgfs))
         output["#mgf"].append(len(benchmark_mgfs))
