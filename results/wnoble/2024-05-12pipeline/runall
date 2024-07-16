@@ -52,9 +52,6 @@ if [[ ! -e $CRUX ]]; then
     CRUX=~/proj/crux/crux-4.2.Linux.x86_64/bin/crux
 fi
 
-# The location of some of the Python scripts.
-PROJ_BIN=~/proj/2021_melih_ms-chimera/bin
-
 # The location of the input MGF and FASTA files.
 root=/net/noble/vol1/data/crux-datasets/2017tran-denovo
 
@@ -114,7 +111,7 @@ benchmark4=nine-species-balanced
 #         basename=`basename $mgf`
 #         annotated=$benchmark1/$species/$basename
 #         if [[ ! -e $annotated ]]; then
-#             python3 $PROJ_BIN/annotate_mgf.py \
+#             python3 ../../../annotate_mgf.py \
 #                 0.01 \
 #                 $species/percolator.log.txt \
 #                 $species/percolator.target.psms.txt \
@@ -138,7 +135,7 @@ benchmark4=nine-species-balanced
 #     --root $benchmark1
 
 # # Remove peptide overlap.
-# $PROJ_BIN/clean-benchmark.py --old_root $benchmark1 --new_root $benchmark2
+# ../../../clean-benchmark.py --old_root $benchmark1 --new_root $benchmark2
 # ../../../bin/summarize_benchmark.py \
 #     --data_dir $root \
 #     --driver_filename $driver \
@@ -146,7 +143,7 @@ benchmark4=nine-species-balanced
 #     --root $benchmark2
 
 # Apply i2l.
-$PROJ_BIN/clean-benchmark.py --i2l --old_root $benchmark1 --new_root $benchmark3
+../../../clean-benchmark.py --i2l --old_root $benchmark1 --new_root $benchmark3
 ../../../bin/summarize_benchmark.py \
     --data_dir $root \
     --driver_filename $driver \
