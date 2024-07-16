@@ -64,7 +64,8 @@ driver=nine-species.txt
 # Name of primary output directory.
 benchmark1=nine-species-overlap
 benchmark2=nine-species-main
-benchmark3=nine-species-balanced
+benchmark3=nine-species-main-i2l
+benchmark4=nine-species-balanced
 
 # for mgf_dir in $root/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
 #     species=`basename $mgf_dir`
@@ -130,27 +131,35 @@ benchmark3=nine-species-balanced
 
 #     done
 # done
-../../../bin/summarize_benchmark.py \
-    --data_dir $root \
-    --driver_filename $driver \
-    --benchmark_dir $benchmark1 \
-    --root $benchmark1
+# ../../../bin/summarize_benchmark.py \
+#     --data_dir $root \
+#     --driver_filename $driver \
+#     --benchmark_dir $benchmark1 \
+#     --root $benchmark1
 
-# Remove peptide overlap.
-$PROJ_BIN/clean-benchmark.py $benchmark1 $benchmark2
-../../../bin/summarize_benchmark.py \
-    --data_dir $root \
-    --driver_filename $driver \
-    --benchmark_dir $benchmark2 \
-    --root $benchmark2
+# # Remove peptide overlap.
+# $PROJ_BIN/clean-benchmark.py --old_root $benchmark1 --new_root $benchmark2
+# ../../../bin/summarize_benchmark.py \
+#     --data_dir $root \
+#     --driver_filename $driver \
+#     --benchmark_dir $benchmark2 \
+#     --root $benchmark2
 
-# Approximately balance size of subsets.
-../../../bin/downsample_benchmark.py --num_spectra 100000 \
-                                     --root $benchmark3 \
-                                     $benchmark2/* 
+# Apply i2l.
+$PROJ_BIN/clean-benchmark.py --i2l --old_root $benchmark1 --new_root $benchmark3
 ../../../bin/summarize_benchmark.py \
     --data_dir $root \
     --driver_filename $driver \
     --benchmark_dir $benchmark3 \
     --root $benchmark3
+
+# Approximately balance size of subsets.
+../../../bin/downsample_benchmark.py --num_spectra 100000 \
+                                     --root $benchmark4 \
+                                     $benchmark3/* 
+../../../bin/summarize_benchmark.py \
+    --data_dir $root \
+    --driver_filename $driver \
+    --benchmark_dir $benchmark4 \
+    --root $benchmark4
 
