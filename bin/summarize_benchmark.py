@@ -80,25 +80,16 @@ def main():
     # Gather up all the statistics
     for species in all_species:
         print(species, file=sys.stderr)
-        output["#raw"].append(
-            len(glob.glob(os.path.join(args.data_dir, species, "*.mgf")))
-        )
-        output["#mgf"].append(
-            len(glob.glob(os.path.join(args.benchmark_dir, species, "*.mgf")))
-        )
-        output["#spectra"].append(
-            count_spectra(glob.glob(os.path.join(args.data_dir,
-                                                 species, "*.mgf")))
-        )
-        output["#PSMs"].append(
-            count_spectra(glob.glob(os.path.join(args.benchmark_dir,
-                                                 species, "*.mgf")))
-        )
-        output["#peptides"].append(
-            count_peptides(
-            count_lines(os.path.join(args.benchmark_dir,
-                                     species, "peptides.txt"))
-        )
+
+        data_mgfs = glob.glob(os.path.join(args.data_dir, species, "*.mgf"))
+        benchmark_mgfs = glob.glob(os.path.join(args.benchmark_dir, species,
+                                                "*.mgf"))
+        
+        output["#raw"].append(len(data_mgfs))
+        output["#mgf"].append(len(benchmark_mgfs))
+        output["#spectra"].append(count_spectra(data_mgfs))
+        output["#PSMs"].append(count_spectra(benchmark_mgfs))
+        output["#peptides"].append(count_peptides(benchmark_mgfs))
 
     output["precursor"] = list(driver[2])
     output["fragment"] = list(driver[3])
