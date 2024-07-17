@@ -6,14 +6,34 @@ import spectrum_utils.spectrum
 import spectrum_utils.plot
 import pyteomics.mgf
 
-DESCRIPTION = """Given an annotated MGF, compute the proportion of intensity
-matched to b- and y-ions.  Prints a list of values to stdout."""
+USAGE = """USAGE: match_by.py <mgf>+
+
+Given one or more annotated MGFs, compute the proportion of intensity
+matched to b- and y-ions in each spectrum. Prints a list of values to
+stdout."""
+
+def convert_ptms (peptide):
+    "Add brackets around PTMs in a peptide."
+
+    mod_dict = {
+        "C+57.021":"C[+57.021]",
+        "M+15.995":"M[+15.9949]",
+        "+0.984":"[+0.9840]",
+        "+42.011":"[+42.011]-",
+        "+43.006-17.027":"[+25.980]-",
+        "+43.006":"[+43.006]-",
+        "-17.027":"[-17.027]-"
+    }
+    for dn_mod in mod_dict.keys():
+        peptide = peptide.replace(dn_mod, mod_dict[dn_mod])
+
+    return peptide
 
 def get_percent_matched(spectrum):
     
     # Extract the peptide sequence.
-    peptide = spectrum['params']['seq']
-
+    peptide = convert_ptms(spectrum['params']['seq'])
+    
     # Convert from pyteomics to spectrum_utils format.
     spectrum = spectrum_utils.spectrum.MsmsSpectrum(
         spectrum['params']['title'],
@@ -35,32 +55,33 @@ def get_percent_matched(spectrum):
     # Compute percent matched intensity.
     total_intensity = 0.0
     matched_intensity = 0.0
-    for annotation, intensity in zip(
-            spectrum.annotation, spectrum.intensity
-    ):
+    for annotation, intensity in zip(spectrum.annotation, spectrum.intensity):
         total_intensity += intensity
         if len(annotation.fragment_annotations) > 0:
-#            print(f"Matching {annotation} with intensity {intensity}.")
             matched_intensity += intensity
-#        else:
-#            print(f"No matching for intensity {intensity}.")
 
-    return 100 * matched_intensity / total_intensity
+    return (peptide, 100 * matched_intensity / total_intensity)
 
 ###########################################################################
 # MAIN
 ###########################################################################
 def main():
+    global USAGE
 
     # Parse the command line.
-    parser = argparse.ArgumentParser(description=DESCRIPTION)
-    parser.add_argument('--mgf', type=str, required=True,
-                        help="Annotated MGF file")
-    args = parser.parse_args()
+    if len(sys.argv) == 1:
+        print(USAGE, file=sys.stderr)
+        sys.exit(1)
 
-    with pyteomics.mgf.read(args.mgf, use_index=False) as reader:
-        for mgf_index, spectrum in enumerate(reader):
-            print(f"{get_percent_matched(spectrum):.4f}")
+    print(f"MGF index\tpeptide\t% matched")
+    for this_mgf in sys.argv[1:]:
+        print(f"Reading from {this_mgf}.", file=sys.stderr)
+        with pyteomics.mgf.read(this_mgf, use_index=False) as reader:
+            for mgf_index, spectrum in enumerate(reader):
+                if mgf_index % 1000 == 0 and mgf_index > 0:
+                    print(mgf_index, file=sys.stderr)
+                peptide, matched = get_percent_matched(spectrum)
+                print(f"{mgf_index}\t{peptide}\t{matched:.4f}")
 
 if __name__ == "__main__":
     main()

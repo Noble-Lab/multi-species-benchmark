@@ -1,0 +1,68 @@
+#!/bin/bash
+#$ -S "/bin/bash"
+#$ -cwd
+#$ -o "job.stdout"
+#$ -e "job.stderr"
+#$ -l m_mem_free=128.0G
+#$ -l h_rt=128:0:0
+#$ -q noble-long.q
+source ~/.bashrc
+conda activate pyteomics
+
+hostname
+date
+echo PID=$$
+
+if [[ -e /etc/profile.d/modules.sh ]]; then
+  source /etc/profile.d/modules.sh
+  module load modules modules-init modules-gs modules-noble
+fi
+
+# These three options make it harder to for some part of a script to
+# fail without you recognizing it. nounset means that references to an
+# unset variable result in an error. This means that you can no longer
+# do stuff like this if VAR is potentially unset, because "$VAR" returns
+# an error rather than "":
+#
+# if [ "$VAR" ]; then
+#
+# fi
+#
+# To explicitly indicate that you are OK with the variable potentially
+# being empty you can instead use ${VAR:-}.
+
+# To avoid errexit for a single command, use "|| true", e.g.,
+#    diff foo foobar || true
+
+set -o nounset
+set -o pipefail
+set -o errexit 
+set -o xtrace
+
+# The location of the input MGF and FASTA files.
+root=/net/noble/vol1/data/crux-datasets/2017tran-denovo
+
+# A tab-delimited file specifying the structure of the data.
+driver=../2024-05-12pipeline/nine-species.txt
+
+# Name of primary output directories.
+benchmark1=nine-species-overlap
+benchmark2=nine-species-main
+benchmark3=nine-species-main-i2l
+benchmark4=nine-species-balanced
+
+# Directory of scripts.
+bin=../../../bin
+
+benchdir=../2024-05-12pipeline/nine-species-main
+
+for mgf_dir in $benchdir/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
+    species=`basename $mgf_dir`
+
+    # Compute distribution of percent b/y ions matched.
+    match_by=match_by.$species.txt
+    if [[ ! -e $match_by ]]; then
+        $bin/match_by.py $mgf_dir/*.mgf > $match_by
+    fi
+    
+done

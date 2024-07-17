@@ -99,6 +99,9 @@ benchmark2=nine-species-main
 benchmark3=nine-species-main-i2l
 benchmark4=nine-species-balanced
 
+# Directory of scripts.
+bin=../../../bin
+
 for mgf_dir in $root/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
     species=`basename $mgf_dir`
 
@@ -147,7 +150,7 @@ for mgf_dir in $root/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
         basename=`basename $mgf`
         annotated=$benchmark1/$species/$basename
         if [[ ! -e $annotated ]]; then
-            python3 ../../../annotate_mgf.py \
+            python3 $bin/annotate_mgf.py \
                 0.01 \
                 $species/percolator.log.txt \
                 $percolator_output \
@@ -163,33 +166,33 @@ for mgf_dir in $root/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
 
     done
 done
-../../../bin/summarize_benchmark.py \
+$bin/summarize_benchmark.py \
     --data_dir $root \
     --driver_filename $driver \
     --benchmark_dir $benchmark1 \
     --root $benchmark1
 
 # Remove peptide overlap.
-../../../clean-benchmark.py --old_root $benchmark1 --new_root $benchmark2
-../../../bin/summarize_benchmark.py \
+$bin/clean-benchmark.py --old_root $benchmark1 --new_root $benchmark2
+$bin/summarize_benchmark.py \
     --data_dir $root \
     --driver_filename $driver \
     --benchmark_dir $benchmark2 \
     --root $benchmark2
 
 # Remove peptide overlap again, but this time convert isoleucines.
-../../../clean-benchmark.py --i2l --old_root $benchmark1 --new_root $benchmark3
-../../../bin/summarize_benchmark.py \
+$bin/clean-benchmark.py --i2l --old_root $benchmark1 --new_root $benchmark3
+$bin/summarize_benchmark.py \
     --data_dir $root \
     --driver_filename $driver \
     --benchmark_dir $benchmark3 \
     --root $benchmark3
 
 # Approximately balance size of subsets.
-../../../bin/downsample_benchmark.py --num_spectra 100000 \
+$bin/downsample_benchmark.py --num_spectra 100000 \
                                      --root $benchmark4 \
                                      $benchmark3/* 
-../../../bin/summarize_benchmark.py \
+$bin/summarize_benchmark.py \
     --data_dir $root \
     --driver_filename $driver \
     --benchmark_dir $benchmark4 \
