@@ -7,11 +7,46 @@
 #$ -l h_rt=128:0:0
 #$ -q noble-long.q
 
-# This script builds a de novo sequencing benchmark dataset from a given set of MGF files and associated FASTA files, using Tide and Percolator to assign peptdies to MS2 spectra.  The script takes as input the name of a directory where the input files reside.  Within that directory, a subdirectory called 'proteomes' contains the proteome FASTA files.  Each of the remaining subdirectories represents a species and contains MGF files from that species.  It is assumed that a species with directory named 'foo' has a corresponding proteome FASTA called 'proteomes/foo.fasta'.  In addition, the script requires a tab-delimited driver file, in which each row corresponds to a species, and the columns are the PRIDE identifier, species name, precursor mass tolerance (in ppm), and m/z bin size (in units of m/z).
+# This script builds a de novo sequencing benchmark dataset from a
+# given set of MGF files and associated FASTA files, using Tide and
+# Percolator to assign peptdies to MS2 spectra. The script takes as
+# input the name of a directory where the input files reside. Within
+# that directory, a subdirectory called 'proteomes' contains the
+# proteome FASTA files. Each of the remaining subdirectories
+# represents a species and contains MGF files from that species. It is
+# assumed that a species with directory named 'foo' has a
+# corresponding proteome FASTA called 'proteomes/foo.fasta'. In
+# addition, the script requires a tab-delimited driver file, in which
+# each row corresponds to a species, and the columns are the PRIDE
+# identifier, species name, precursor mass tolerance (in ppm), and m/z
+# bin size (in units of m/z).
 
-# The script produces as output three directories.  The first directory contains an initial version of the benchmark that allows peptides to appear in more than one species.  The second directory is a mirror image of the first one, but with overlapping peptides eliminated by randomly assigning each shared peptide to a single species.  The third directory is a balanced version of the second one, in which the number of MGF files is randomly downsampled so that each species has approximately the same number of associated spectra.
+# The script produces as output four directories. The first directory
+# contains an initial version of the benchmark that allows peptides to
+# appear in more than one species. The second directory is a mirror
+# image of the first one, but with overlapping peptides eliminated by
+# randomly assigning each shared peptide to a single species. Two
+# peptides are considered the same if they have the same sequence but
+# different PTMs. The third directory is similar to the second, except
+# that peptides are also considered the same if they differ only by
+# isoleucine/leucine. The fourt directory is a balanced version of the
+# third one, in which the number of MGF files is randomly downsampled
+# so that each species has approximately the same number of associated
+# spectra.
 
-# In addition, the script produces a series of intermediate output directories, each named after a single species.  These intermediate directories contain the peptide index built by tide-index (in a subdirectory called 'tide-index'), all of the output files produced by tide-search (with names beginning with 'tide-search'), and all of the output files produced by Percolator (with names beginning with 'percolator', plus 'make-pin.pin').  Notably, the files ending in 'log.txt' provide details including the full command line for each command, and 'params.txt' provide listings of all parameters.
+# In addition, the script produces a series of intermediate output
+# directories, each named after a single species. These intermediate
+# directories contain the peptide index built by tide-index (in a
+# subdirectory called 'tide-index'), all of the output files produced
+# by tide-search (with names beginning with 'tide-search'), and all of
+# the output files produced by Percolator (with names beginning with
+# 'percolator', plus 'make-pin.pin'). Notably, the files ending in
+# 'log.txt' provide details including the full command line for each
+# command, and 'params.txt' provide listings of all parameters.
+
+# At the end, the script generates a series of six zip files,
+# containing the raw data, the intermediate files, and each of the
+# four benchmarks.
 
 source ~/.bashrc
 conda activate pyteomics
@@ -58,91 +93,91 @@ root=/net/noble/vol1/data/crux-datasets/2017tran-denovo
 # A tab-delimited file specifying the structure of the data.
 driver=nine-species.txt
 
-# Name of primary output directory.
+# Name of primary output directories.
 benchmark1=nine-species-overlap
 benchmark2=nine-species-main
 benchmark3=nine-species-main-i2l
 benchmark4=nine-species-balanced
 
-# for mgf_dir in $root/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
-#     species=`basename $mgf_dir`
+for mgf_dir in $root/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
+    species=`basename $mgf_dir`
 
-#     # Create the index.
-#     index=$species/tide-index
-#     if [[ ! -e $index ]]; then
-#         $CRUX tide-index \
-#             --mods-spec 1M+15.994915,1N+0.984016,1Q+0.984016 \
-#             --nterm-peptide-mods-spec 1X+42.010565,1X+43.005814,1X-17.026549,1X+25.980265 \
-#             --max-mods 3 \
-#             --output-dir $index \
-#             --peptide-list T \
-#             $root/proteomes/$species.fasta \
-#             $index
-#      fi
+    # Create the index.
+    index=$species/tide-index
+    if [[ ! -e $index ]]; then
+        $CRUX tide-index \
+            --mods-spec 1M+15.994915,1N+0.984016,1Q+0.984016 \
+            --nterm-peptide-mods-spec \
+            1X+42.010565,1X+43.005814,1X-17.026549,1X+25.980265 \
+            --max-mods 3 \
+            --output-dir $index \
+            --peptide-list T \
+            $root/proteomes/$species.fasta \
+            $index
+     fi
 
-#     precursor=`grep $species $driver | awk '{print $3}'`
-#     fragment=`grep $species $driver | awk '{print $4}'`
+    precursor=`grep $species $driver | awk '{print $3}'`
+    fragment=`grep $species $driver | awk '{print $4}'`
 
-#     # Run the search.
-#     search_output=$species/tide-search.target.txt
-#     if [[ ! -e $search_output ]]; then
-#         $CRUX tide-search \
-#             --isotope-error 1 \
-#             --output-dir $species \
-#             --num-threads 8 \
-#             --use-tailor-calibration T \
-#             --precursor-window $precursor \
-#             --mz-bin-width $fragment \
-#             $mgf_dir/*.mgf \
-#             $index
-#     fi
+    # Run the search.
+    search_output=$species/tide-search.target.txt
+    if [[ ! -e $search_output ]]; then
+        $CRUX tide-search \
+            --isotope-error 1 \
+            --output-dir $species \
+            --num-threads 8 \
+            --use-tailor-calibration T \
+            --precursor-window $precursor \
+            --mz-bin-width $fragment \
+            $mgf_dir/*.mgf \
+            $index
+    fi
 
-#     # Run the pipeline command.
-#     percolator_output=$species/percolator.target.peptides.txt
-#     if [[ ! -e $percolator_output ]]; then
-#         $CRUX percolator \
-#             --output-dir $species \
-#             $search_output
-#     fi
+    # Run the pipeline command.
+    percolator_output=$species/percolator.target.psms.txt
+    if [[ ! -e $percolator_output ]]; then
+        $CRUX percolator \
+            --output-dir $species \
+            $search_output
+    fi
 
-#     # Annotate all the MGFs.
-#     mkdir -p $benchmark1/$species
-#     for mgf in $mgf_dir/*.mgf; do
-#         basename=`basename $mgf`
-#         annotated=$benchmark1/$species/$basename
-#         if [[ ! -e $annotated ]]; then
-#             python3 ../../../annotate_mgf.py \
-#                 0.01 \
-#                 $species/percolator.log.txt \
-#                 $species/percolator.target.psms.txt \
-#                 $mgf \
-#                 > $annotated
-#         fi
+    # Annotate all the MGFs.
+    mkdir -p $benchmark1/$species
+    for mgf in $mgf_dir/*.mgf; do
+        basename=`basename $mgf`
+        annotated=$benchmark1/$species/$basename
+        if [[ ! -e $annotated ]]; then
+            python3 ../../../annotate_mgf.py \
+                0.01 \
+                $species/percolator.log.txt \
+                $percolator_output \
+                $mgf \
+                > $annotated
+        fi
 
-#         num_psms=`grep "BEGIN IONS" $annotated | wc -l` || true
-#         # https://stackoverflow.com/questions/18668556/how-can-i-compare-numbers-in-bash
-#         if [[ $num_psms -lt 100 ]]; then
-#             echo "Deleting $basename with $num_psms PSMs."
-#             rm $annotated
-#         fi
+        num_psms=`grep "BEGIN IONS" $annotated | wc -l` || true
+        if [[ $num_psms -lt 100 ]]; then
+            echo "Deleting $basename with $num_psms PSMs."
+            rm $annotated
+        fi
 
-#     done
-# done
-# ../../../bin/summarize_benchmark.py \
-#     --data_dir $root \
-#     --driver_filename $driver \
-#     --benchmark_dir $benchmark1 \
-#     --root $benchmark1
+    done
+done
+../../../bin/summarize_benchmark.py \
+    --data_dir $root \
+    --driver_filename $driver \
+    --benchmark_dir $benchmark1 \
+    --root $benchmark1
 
-# # Remove peptide overlap.
-# ../../../clean-benchmark.py --old_root $benchmark1 --new_root $benchmark2
-# ../../../bin/summarize_benchmark.py \
-#     --data_dir $root \
-#     --driver_filename $driver \
-#     --benchmark_dir $benchmark2 \
-#     --root $benchmark2
+# Remove peptide overlap.
+../../../clean-benchmark.py --old_root $benchmark1 --new_root $benchmark2
+../../../bin/summarize_benchmark.py \
+    --data_dir $root \
+    --driver_filename $driver \
+    --benchmark_dir $benchmark2 \
+    --root $benchmark2
 
-# Apply i2l.
+# Remove peptide overlap again, but this time convert isoleucines.
 ../../../clean-benchmark.py --i2l --old_root $benchmark1 --new_root $benchmark3
 ../../../bin/summarize_benchmark.py \
     --data_dir $root \
@@ -160,3 +195,22 @@ benchmark4=nine-species-balanced
     --benchmark_dir $benchmark4 \
     --root $benchmark4
 
+# Package everything up into zip files.
+#zip nine-species.data.zip \
+#    $root/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/*.mgf \
+#    $root/proteomes/*.fasta
+
+zip nine-species.intermediate.zip \
+    {Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/tide-index/tide-index.log.txt \
+    {Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/tide-search.target.txt \
+    {Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/tide-search.decoy.txt \
+    {Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/tide-search.log.txt \
+    {Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/percolator.target.psms.txt \
+    {Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/percolator.log.txt
+
+for benchmark in $benchmark1 $benchmark2 $benchmark3 $benchmark4; do
+    zip -r nine-species.$benchmark.zip \
+        $benchmark.html \
+        $benchmark.txt \
+        $benchmark
+done

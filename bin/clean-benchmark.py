@@ -94,8 +94,7 @@ def main():
                             species_mapping[peptide].append(species)
         print(f"Found {len(species_mapping)} peptides.", file=sys.stderr)
 
-    # If a peptide appears in more than one species, select one
-    # species randomly.
+    # If a peptide appears in more than one species, select one randomly.
     num_duplicates = 0
     eliminated_psms = 0
     for peptide in species_mapping.keys():
@@ -123,10 +122,10 @@ def main():
               file=sys.stderr)
 
         print(f"Creating cleaned MGFs for {species}.", file=sys.stderr)
-        mgf_list = [ f.name for f in os.scandir(
-            os.path.join(args.old_root, species)
-        )
-                     if f.is_file() ]
+        mgf_list = [
+            f.name for f in os.scandir(os.path.join(args.old_root, species))
+            if f.is_file()
+        ]
         for mgf_file in mgf_list:
             old_mgf_filename = os.path.join(args.old_root, species, mgf_file)
             new_mgf_filename = os.path.join(args.new_root, species, mgf_file)

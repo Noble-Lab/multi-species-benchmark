@@ -29,15 +29,19 @@ def count_lines(filename):
             return(len(my_file.readlines()))
     return 0
 
+def i2l(peptide):
+    "Leucines to isoleucines."
+    return re.sub("I", "L", peptide)
+
 def clean_peptide (peptide):
     "Remove PTMs."
 
-    return re.sub(r"[0-9\.\[\]]+", "", peptide)
+    return i2l(re.sub(r"[0-9\.\[\]]+", "", peptide))
     
 
 def count_peptides(mgf_filenames):
     """Count number of distinct peptides in a set of MGF files.  Eliminates
-    modifications first."""
+    modifications and converts isoleucines first."""
 
     peptides = {} # Key = peptide, value = True
     for mgf_filename in mgf_filenames:

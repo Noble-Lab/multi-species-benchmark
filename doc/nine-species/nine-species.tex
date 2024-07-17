@@ -125,8 +125,8 @@ Note that, for one species (\textit{Vigna mungo}) no reference proteome is avail
 \centering
 \begin{tabular}{lrrrrrr}
 \hline
-Species & \multicolumn{2}{c}{Overlap} & \multicolumn{2}{c}{Main} & \multicolumn{2}{c}{Balanced} \\
-& PSMs & Peptides  & PSMs & Peptides  & PSMs & Peptides  \\
+Species & \multicolumn{2}{c}{Main} & \multicolumn{2}{c}{Balanced} \\
+& PSMs & Peptides  & PSMs & Peptides  \\
 \hline
 \textit{Vigna mungo} & & & 108514 & 12001 \\
 \textit{Mus musculus} & & & 25541 & 5899 \\
@@ -140,9 +140,8 @@ Species & \multicolumn{2}{c}{Overlap} & \multicolumn{2}{c}{Main} & \multicolumn{
 \hline
 Total & & & 2,844,906 & 175,316 \\
 \end{tabular}
-\caption{{\bf Three versions of the nine-species benchmark.}
-  The ``overlap'' dataset contains peptides that are associated with more than one species.
-  The ``main'' dataset \fixme{XXX}
+\caption{{\bf Two versions of the nine-species benchmark.}
+  The balanced dataset eliminates some data in order to approximately balance the amount of data associated with each species.
 }
 \label{tab:benchmark}
 \end{table}
@@ -158,16 +157,16 @@ The search engine employed XCorr scoring with Tailor calibration \cite{sulimov20
 All search results were then analyzed jointly per species using the Crux implementation of Percolator, with default parameters.
 For the benchmark, we retained all PSMs with Percolator q value $<$ 0.01.
 We identified 13 MGF files with fewer than 100 accepted PSMs, and we eliminated all of these PSMs from the benchmark.
-The resulting benchmark (``overlap'') contains \fixme{XXX} million PSMs drawn from 343 RAW files.
+At this point in the processing pipeline, the dataset contains 2,898,611 annotated spectra (PSMs)  drawn from 339 RAW files and associated with 179,256 distinct peptides.
 
 \subsection*{Avoiding train/test leakage}
 
 To avoid train/test leakage, we post-processed the PSMs to eliminate peptides that are shared between species.
 Among the 229,984 unique peptides, we identified 3797 (1.7\%) that occur in more than one species.
 For each such peptide, we selected one of the associated species at random and then eliminated all PSMs containing that peptide in other species.
-Note that when identifying shared peptides between species, we considered all modified forms of a given peptide sequence to be the same.
+Note that when identifying shared peptides between species, we considered all modified forms of a given peptide sequence to be the same, and we converted all isoleucines to leucines.
 Hence, if a given peptide appears in more than one species, then that peptide, including all its modified forms, is randomly assigned to a single species and eliminated from the others.
-The final, non-redundant benchmark dataset (``main'') consists of 2.8 million PSMs corresponding to \fixme{XXX} peptides.
+The final, non-redundant benchmark dataset (``main'') consists of 2,843,631 PSMs corresponding to 258,141 distinct peptides.
 
 \subsection*{Balancing the benchmark}
 
@@ -178,7 +177,7 @@ Downsampling all of the other eight species to have 25,000 PSMs would reduce the
 To avoid producing such a small dataset, we therefore opted to downsample each dataset to approximately 100,000 PSMs.
 This approach yields a slight imbalance, because three species have fewer than 100,000 PSMs (44,604 for \textit{H.\ sapiens} and 82,290 for \textit{Candidatus endoloripes}), while retaining a larger percentage of the original data.
 Our downsampling procedure involved randomly permuting the order of the MGF files for each species and then selecting the files in order until at least 100,000 PSMs have been accepted.
-The final, balanced benchmark dataset consists of \fixme{XXX} PSMs from \fixme{XXX} peptides.
+The final, balanced benchmark dataset is approximately $\frac{1}{4}$ the size of the main benchmark, consisting of 779,796 PSMs from 180,250 distinct peptides.
 
 \section*{Data Records}
 
@@ -188,7 +187,7 @@ The dataset contains files resulting from various stages of the benchmark:
 \item Reference proteome files in FASTA format, downloaded from Uniprot.
 \item Search results files for both targets and decoys, in tab-delimited format, produced by Tide.
 \item PSM-level Percolator results files for targets, in tab-delimited format.
-\item Annotated MGF files for all three versions of the benchmark (overlap, main, and balanced).
+\item Annotated MGF files for both versions of the benchmark (main and balanced).
 \end{itemize}
 Also included are log files for the steps of the analysis pipeline carried out using Crux \cite{park2008rapid} (Tide indexing, Tide search, and Percolator).
 
