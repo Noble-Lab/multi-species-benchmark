@@ -6,7 +6,7 @@
 \usepackage{url} % Allow URLs.
 \usepackage[sort&compress]{natbib} % Better bibliography formatting.
 
-\newcommand{\fixme}[1]{{\color{red}{\bf FIXME: #1}\color{black}}}
+\newcommand{\fixme}[1]{{\color{red}{\bf #1}\color{black}}}
 
 \title{A multi-species benchmark for training and validating large scale mass spectrometry proteomics machine learning models}
 
@@ -81,15 +81,15 @@ In addition, we make available all of the intermediate files, for use in validat
 \hline
 PRIDE & Species & Uniprot & Files & Spectra & precursor & fragment \\
 \hline
-PXD005025 & \textit{Vigna mungo} & UP000087766 & 24 & 932848 & 20 & 0.05 \\
-PXD004948 & \textit{Mus musculus} & UP000000589 & 13 & 306786 10 & 0.05 \\
-PXD004325 & \textit{Methanosarcina mazei} & UP000033058  & 72 & 3728183 & 10 & 0.05 \\
-PXD004565 & \textit{Bacillus subtilis} & UP000001570 & 106 & 4336428 & 30 & 0.05 \\
-PXD004536 & \textit{Candidatus endoloripes} & UP000094849 & 11 & 2272023 & 20 & 0.05 \\
-PXD004947 & \textit{Solanum lycopersicum} & UP000004994 & 60 & 603506 & 15 & 0.05 \\
-PXD003868 & \textit{Saccharomyces-cerevisiae} & UP000002311 & 27 & 1477397 & 20 & 0.05 \\
-PXD004467 & \textit{Apis mellifera} & UP000005203 & 17 & 823169 & 20 & 0.05 \\
-PXD004424 & \textit{H. sapiens} & UP000005640 & 26 & 684821 & 20 & 0.02 \\
+PXD005025 & \textit{Vigna mungo} & UP000087766 & 24 & 932,848 & 20 & 0.05 \\
+PXD004948 & \textit{Mus musculus} & UP000000589 & 13 & 306,786 10 & 0.05 \\
+PXD004325 & \textit{Methanosarcina mazei} & UP000033058  & 72 & 3,728,183 & 10 & 0.05 \\
+PXD004565 & \textit{Bacillus subtilis} & UP000001570 & 106 & 4,336,428 & 30 & 0.05 \\
+PXD004536 & \textit{Candidatus endoloripes} & UP000094849 & 11 & 2,272,023 & 20 & 0.05 \\
+PXD004947 & \textit{Solanum lycopersicum} & UP000004994 & 60 & 603,506 & 15 & 0.05 \\
+PXD003868 & \textit{Saccharomyces-cerevisiae} & UP000002311 & 27 & 1,477,397 & 20 & 0.05 \\
+PXD004467 & \textit{Apis mellifera} & UP000005203 & 17 & 823,169 & 20 & 0.05 \\
+PXD004424 & \textit{H. sapiens} & UP000005640 & 26 & 684,821 & 20 & 0.02 \\
 \hline
 Total & & & 343 & 15,165,161 \\
 \end{tabular}
@@ -100,17 +100,17 @@ No reference proteome is available for \textit{Vigna mungo}, so the proteome for
 \label{tab:benchmark}
 \end{table}
 
-For our benchmark, we used the same nine studies originally identified by Tran {\em et al.} \cite{tran2017denovo}
+For our benchmark, we used the same nine studies originally identified by Tran {\em et al.}. \cite{tran2017denovo}
 \begin{enumerate}
 \item Paiva \textit{et al.}\ investigated the protein expression response of the cowpea plant (\textit{Vigna unguiculata}) to infection by \textit{Cowpsea severe mosaic virus} (CSMV) by carrying out label-free proteomic analysis of cowpea leaves that were inoculated with CSMV compared to mock inoculation controls \cite{paiva2016label}.
 \item Nevo \textit{et al.}\ studied a rare autosomal recessive lysosomal storage disorder, cystinosis, by carrying out SILAC proteomic analysis of engineered mouse cell lines that harbor a known pathenogenic mutation of the causative gene, \textit{CTNS} \cite{nevo2017impact}.
-\item Cassidy \textit{et al.}\ evaluated two different analytical approaches for carrying out full proteome analysis while identifying short open reading frames: high/low pH reversed phase LC-MS bottom-up approach and a semi-top-down strategy involving separation of proteins a GelFree system followed by digestion and LC-MS analysis \cite{cassidy2016combination}. The experiments were carried out using the methane producing archaeon \textit{Methanosarcina mazei}.
+\item Cassidy \textit{et al.}\ evaluated two different analytical approaches for carrying out full proteome analysis while identifying short open reading frames: a high/low pH reversed phase LC-MS bottom-up approach and a semi-top-down strategy involving separation of proteins in a GelFree system followed by digestion and LC-MS analysis \cite{cassidy2016combination}. The experiments were carried out using the methane producing archaeon \textit{Methanosarcina mazei}.
 \item Reuss \textit{et al.}\ carried out proteomic analyses on a series of minimized strains of the model bacterium, \textit{Bacillus subtilis}, with genomes reduced by $\sim$36\% \cite{reuss2017large}.
 \item Petersen \textit{et al.}\ performed proteomic analysis of \textit{Candidatus endoloripes}, which are bacterial symbionts of the \textit{Lucinidae} family of marine bivalves \cite{petersen2016chemosynthetic}.
 \item Mata \textit{et al.}\ characterized the proteome of the tomato pericarp at its ripe red stage \cite{mata2017depth}.
 \item Seidel \textit{et al.}\ analyzed the global proteomic stress response in wildtype and two yeast knockout strains for the gene PBP1  \cite{seidel2017quantitative}.
 \item Hu \textit{et al.}\ studied honeybees that exhibit a suite of behaviors (\textit{Varroa} sensitive hygiene---VSH) associated with infection with the \textit{Varroa destructor} virus \cite{hu2016proteome}.  Proteomic analysis was carried out on mushroom bodies and antennae of adult honeybees with and without VSH.
-\item Cypryck \textit{et al.} characterized extracellular vesicles released from human primary macrophages after infection with influenza A viruses \cite{cypryk2017proteomic}.
+\item Cypryck \textit{et al.}\ characterized extracellular vesicles released from human primary macrophages after infection with influenza A viruses \cite{cypryk2017proteomic}.
 \end{enumerate}
 All nine studies were performed using a Thermo Scientific Q Exactive mass spectrometer.
 
@@ -143,7 +143,7 @@ Total & & & 2,844,906 & 175,316 \\
 \caption{{\bf Two versions of the nine-species benchmark.}
   The balanced dataset eliminates some data in order to approximately balance the amount of data associated with each species.
 }
-\label{tab:benchmark}
+\label{tab:sizes}
 \end{table}
 
 \subsection*{Database search and FDR control}
@@ -193,9 +193,38 @@ Also included are log files for the steps of the analysis pipeline carried out u
 
 \section*{Technical Validation}
 
-\fixme{False discovery rate curves}
+\begin{figure}
+  \centering
+  \begin{tabular}{ll}
+    \fixme{Insert figure} & \fixme{Insert figure} \\
+    a & b \\
+    \fixme{Insert figure} & \fixme{Insert figure} \\
+    c & d \\
+  \end{tabular}
+  \caption{\textbf{Validation of the benchmarks.}
+    \textbf{a.} Each series indicates the number of accepted PSMs at 1\% PSM-level FDR for a given species.
+    \textbf{b.} The bar plot indicates the proportion of spectra that were accepted at 1\% PSM-level FDR per species.
+    \textbf{c.} Each violin plot indicates the distribution of the proportion of total ion current that is explained by PSMs per species.
+    \textbf{d.} Each violin plots indicates the distribution of correlation values between observed and predicted fragment ion intensities per species.}
+  \label{fig:fdr}
+\end{figure}
+
+Data quality and interpretability varies dramatically from study to study, due to differences in sample type, sample preparation protocols, chromatography and instrument settings, and database size.
+To assess the overall rate of successful identification of spectra in each data set, we plotted the number of accepted PSMs as a function of PSM-level FDR threshold (Figure~\ref{fig:fdr}a).
+\fixme{Describe plot.}
+We also computed the proportion of spectra that were accepted at 1\% PSM-level FDR per species (Figure~\ref{fig:fdr}b).
+\fixme{Describe plot.}
+
+To assess the validity of the PSMs themselves, we carried out two additional validations.
+First, for each PSM, we computed the proportion of the total ion current that is explained by matched b- and y-ions, using a matching tolerance of 0.05~\textit{m/z}.
+The resulting distributions of proportions differ substantially by species (Figure~\ref{fig:fdr}c).
+\fixme{Describe plot.}
+Second, for each PSM, we used the \fixme{XXX} model to predict b/y-ion peak intensities, and we computed the Pearson correlation between these observed and predicted intensities.
+Again, this distribution of correlations differs substantially by species (Figure~\ref{fig:fdr}d).
+\fixme{Describe plot.}
 
 \section*{Code Availability}
+All code required to generate the various benchmarks and to produce the figures in this manuscript is available with an Apache license at \url{https://github.com/Noble-Lab/nine-species}, with a snapshot of the repository stored at \fixme{zenodo}.
 
 \bibliographystyle{unsrt}
 \bibliography{refs} % See https://github.com/Noble-Lab/noble-lab-references
