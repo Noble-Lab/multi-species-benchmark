@@ -66,3 +66,6 @@ for mgf_dir in $benchdir/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
     fi
     
 done
+
+./make_histograms.py sample.pdf sample.*.txt
+
