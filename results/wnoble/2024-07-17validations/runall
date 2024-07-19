@@ -69,3 +69,4 @@ done
 
 ./make_histograms.py sample.pdf sample.*.txt
 
+./make_barchart.py ../2024-05-12pipeline/nine-species-main.txt percent-id.png
