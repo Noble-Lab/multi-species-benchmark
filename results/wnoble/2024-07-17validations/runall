@@ -69,7 +69,15 @@ done
 
 ./make_fdr_curves.py \
     nine-species-fdrs.pdf \
-    ../2024-05-12pipeline/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/percolator.target.psms.txt
+    ../2024-05-12pipeline/Bac*/percolator.target.psms.txt \
+    ../2024-05-12pipeline/Sac*/percolator.target.psms.txt \
+    ../2024-05-12pipeline/Met*/percolator.target.psms.txt \
+    ../2024-05-12pipeline/Api*/percolator.target.psms.txt \
+    ../2024-05-12pipeline/Sol*/percolator.target.psms.txt \
+    ../2024-05-12pipeline/Can*/percolator.target.psms.txt \
+    ../2024-05-12pipeline/Vig*/percolator.target.psms.txt \
+    ../2024-05-12pipeline/H.-*/percolator.target.psms.txt \
+    ../2024-05-12pipeline/Mus*/percolator.target.psms.txt
 
 ./make_histograms.py sample.pdf sample.*.txt
 
