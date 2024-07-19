@@ -1,0 +1,11 @@
+species	#raw	#mgf	#spectra	#PSMs	#peptides	precursor	fragment
+Mus-musculus	13	9	306786	25490	6833	10	0.05
+H.-sapiens	26	26	684821	44348	13853	20	0.02
+Vigna-mungo	24	24	932848	108756	13768	20	0.05
+Candidatus-endoloripes	11	11	2272023	82204	10863	20	0.05
+Solanum-lycopersicum	60	60	603506	177941	62294	15	0.05
+Apis-mellifera	17	17	823169	193437	30013	20	0.05
+Methanosarcina-mazei	72	72	3728183	267269	23448	10	0.05
+Saccharomyces-cerevisiae	27	27	1477397	586278	33008	20	0.05
+Bacillus-subtilis	106	93	4336428	1357908	64025	30	0.05
+total	356	339	15165161	2843631	258105		

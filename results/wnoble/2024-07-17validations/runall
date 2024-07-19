@@ -79,6 +79,16 @@ done
     ../2024-05-12pipeline/H.-*/percolator.target.psms.txt \
     ../2024-05-12pipeline/Mus*/percolator.target.psms.txt
 
-./make_histograms.py match-by.pdf match_by.*.txt
+./make_histograms.py match-by.pdf \
+    match_by.Bac*.txt \
+    match_by.Sac*.txt \
+    match_by.Met*.txt \
+    match_by.Api*.txt \
+    match_by.Sol*.txt \
+    match_by.Can*.txt \
+    match_by.Vig*.txt \
+    match_by.H.-*.txt \
+    match_by.Mus*.txt
 
-./make_barchart.py ../2024-05-12pipeline/nine-species-main.txt percent-id.png
+# N.B. I manually re-ordered the input file.
+./make_barchart.py nine-species-main.txt percent-id.pdf
