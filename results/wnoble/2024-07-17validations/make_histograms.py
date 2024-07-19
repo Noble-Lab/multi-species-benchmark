@@ -30,7 +30,7 @@ def main():
     i = 0
     for species in match_df.keys():
         axs[i].hist(match_df[species], density=True, bins=100)
-        axs[i].set_title(species, loc='left')
+        axs[i].set_title(species, loc='right')
         axs[i].spines['top'].set_visible(False)
         axs[i].spines['right'].set_visible(False)
         i += 1
