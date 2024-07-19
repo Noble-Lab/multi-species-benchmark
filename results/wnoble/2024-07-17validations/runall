@@ -80,6 +80,6 @@ done
     ../2024-05-12pipeline/H.-*/percolator.target.psms.txt \
     ../2024-05-12pipeline/Mus*/percolator.target.psms.txt
 
-./make_histograms.py sample.pdf sample.*.txt
+./make_histograms.py match-by.pdf match_by.*.txt
 
 ./make_barchart.py ../2024-05-12pipeline/nine-species-main.txt percent-id.png
