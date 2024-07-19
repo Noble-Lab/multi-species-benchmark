@@ -45,9 +45,7 @@ def get_percent_matched(spectrum):
     
     # Annotate the spectrum.
     spectrum = (
-        spectrum.set_mz_range(min_mz=100, max_mz=1400)
-        .remove_precursor_peak(2.0, "Da")
-        .filter_intensity(min_intensity=0.05, max_num_peaks=50)
+        spectrum.remove_precursor_peak(2.0, "Da")
         .scale_intensity("root")
         .annotate_proforma(peptide, 0.05, "Da", ion_types="by")
     )

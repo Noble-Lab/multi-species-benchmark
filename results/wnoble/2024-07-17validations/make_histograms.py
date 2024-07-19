@@ -22,10 +22,8 @@ def main():
             match_file.readline()
             match_df[species] = [float(line.rstrip().split("\t")[2])
                                  for line in match_file]
-#            match_df[species] = [float(line.rstrip()) for line in match_file]
             print(f"Read {len(match_df[species])} match percentages from " +
                   f"{species}.", file=sys.stderr)
-            
 
     # Make the histogram.
     fig, axs = plt.subplots(len(match_df), 1, sharex=True, tight_layout=True)

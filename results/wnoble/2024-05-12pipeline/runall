@@ -95,8 +95,8 @@ driver=nine-species.txt
 
 # Name of primary output directories.
 benchmark1=nine-species-overlap
-benchmark2=nine-species-main
-benchmark3=nine-species-main-i2l
+benchmark2=nine-species-main-no-i2l
+benchmark3=nine-species-main
 benchmark4=nine-species-balanced
 
 # Directory of scripts.
