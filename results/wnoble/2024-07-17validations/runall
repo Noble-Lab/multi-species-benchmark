@@ -60,10 +60,11 @@ for mgf_dir in $benchdir/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
     species=`basename $mgf_dir`
 
     # Compute distribution of percent b/y ions matched.
-#    match_by=match_by.$species.txt
-#    if [[ ! -e $match_by ]]; then
-#        $bin/match_by.py $mgf_dir/*.mgf > $match_by
-#    fi
+    # N.B. This step takes a very long time!
+    match_by=match_by.$species.txt
+    if [[ ! -e $match_by ]]; then
+        $bin/match_by.py $mgf_dir/*.mgf > $match_by
+    fi
     
 done
 
