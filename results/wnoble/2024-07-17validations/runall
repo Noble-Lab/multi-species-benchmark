@@ -60,12 +60,16 @@ for mgf_dir in $benchdir/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
     species=`basename $mgf_dir`
 
     # Compute distribution of percent b/y ions matched.
-    match_by=match_by.$species.txt
-    if [[ ! -e $match_by ]]; then
-        $bin/match_by.py $mgf_dir/*.mgf > $match_by
-    fi
+#    match_by=match_by.$species.txt
+#    if [[ ! -e $match_by ]]; then
+#        $bin/match_by.py $mgf_dir/*.mgf > $match_by
+#    fi
     
 done
+
+./make_fdr_curves.py \
+    nine-species-fdrs.pdf \
+    ../2024-05-12pipeline/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/percolator.target.psms.txt
 
 ./make_histograms.py sample.pdf sample.*.txt
 
