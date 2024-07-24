@@ -17,7 +17,8 @@ def main():
     # Read all the match percentages from species-specific files.
     match_df = {} # Key = species, value = list of match percentages.
     for match_filename in sys.argv[2:]:
-        species = match_filename.split(".")[1] # match_by.<species>.txt
+        # match_by.<species>.txt (H.-sapiens special case)
+        species = ".".join(match_filename.split(".")[1:-1]) 
         with open(match_filename, "r") as match_file:
             match_file.readline()
             match_df[species] = [float(line.rstrip().split("\t")[2])
@@ -26,7 +27,8 @@ def main():
                   f"{species}.", file=sys.stderr)
 
     # Make the histogram.
-    fig, axs = plt.subplots(len(match_df), 1, sharex=True, tight_layout=True)
+    fig, axs = plt.subplots(len(match_df), 1, sharex=True, tight_layout=True,
+                            figsize=(4,8))
     i = 0
     for species in match_df.keys():
         axs[i].hist(match_df[species], density=True, bins=100)

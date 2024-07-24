@@ -93,3 +93,5 @@ done
 
 # N.B. I manually re-ordered the input file.
 ./make_barchart.py nine-species-main.txt percent-id.pdf
+
+cp nine-species-fdrs.pdf percent-id.pdf match-by.pdf ../../../doc/nine-species
