@@ -199,6 +199,15 @@ $bin/summarize_benchmark.py \
     --benchmark_dir $benchmark4 \
     --root $benchmark4
 
+# For each benchmark, create one MGF per species.
+for benchmark in $benchmark1 $benchmark2 $benchmark3 $benchmark4; do
+    for species in $benchmark/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
+        species=`basename $species`
+        cat $benchmark/$species/*.mgf > $benchmark/$species.mgf
+    done
+done
+
+
 # Package everything up into zip files.
 #zip nine-species.data.zip \
 #    $root/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/*.mgf \
