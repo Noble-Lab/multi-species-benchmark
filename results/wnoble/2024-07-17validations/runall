@@ -56,8 +56,8 @@ bin=../../../bin
 
 benchdir=../2024-05-12pipeline/nine-species-main
 
-for mgf_dir in $benchdir/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
-    species=`basename $mgf_dir`
+for species in `awk '{print $2}' $driver`; do
+    mgf_dir=$benchdir/$species
 
     # Compute distribution of percent b/y ions matched.
     # N.B. This step takes a very long time!
