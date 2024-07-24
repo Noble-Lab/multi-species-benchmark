@@ -28,16 +28,17 @@ def main():
                   f"{species}.", file=sys.stderr)
 
     # Make the histogram.
-    fig, axs = plt.subplots(len(match_df), 1, sharex=True, tight_layout=True,
-                            subplot_kw={(figsize:(4,8))})
-    axs.xlabel("Percent matched")
+    fig, axs = plt.subplots(len(match_df), 1, sharex=True, tight_layout=True)
+    fig.set_size_inches(4,8)
     i = 0
     for species in match_df.keys():
         axs[i].hist(match_df[species], density=True, bins=100)
         axs[i].set_title(re.sub("-", " ", species), loc='right')
+        axs[i].set_ylim(0,0.1)
         axs[i].spines['top'].set_visible(False)
         axs[i].spines['right'].set_visible(False)
         i += 1
+    axs[i-1].set_xlabel("Percent matched")
     plt.savefig(sys.argv[1])
 
 if __name__ == "__main__":

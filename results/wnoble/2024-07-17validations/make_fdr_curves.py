@@ -18,7 +18,7 @@ def main():
               file=sys.stderr)
         sys.exit(1)
 
-    fig = plt.figure(figsize=(4,8))
+    fig = plt.figure(figsize=(4,8), tight_layout=True)
     ax = plt.gca()
     ax.set_xlim(0, 0.1)
     ax.set_ylim(0, 2e6)

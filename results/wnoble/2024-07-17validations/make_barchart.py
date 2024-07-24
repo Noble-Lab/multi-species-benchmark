@@ -32,8 +32,10 @@ def main():
     print(percents, file=sys.stderr)
 
     # Make the barchart.
-    plt.barh(species, percents)
-    plt.xlabel("Percent identified")
+    fig, ax = plt.subplots()
+    fig.set_size_inches(4,8)
+    ax.barh(species, percents)
+    ax.set_xlabel("Percent identified")
     plt.tight_layout()
     plt.savefig(sys.argv[2])
 
