@@ -2,6 +2,7 @@
 # AUTHOR: WSN
 # CREATE DATE: 17 July 2024
 import sys
+import re
 import matplotlib.pyplot as plt
 
 ###########################################################################
@@ -28,11 +29,12 @@ def main():
 
     # Make the histogram.
     fig, axs = plt.subplots(len(match_df), 1, sharex=True, tight_layout=True,
-                            figsize=(4,8))
+                            subplot_kw={(figsize:(4,8))})
+    axs.xlabel("Percent matched")
     i = 0
     for species in match_df.keys():
         axs[i].hist(match_df[species], density=True, bins=100)
-        axs[i].set_title(species, loc='right')
+        axs[i].set_title(re.sub("-", " ", species), loc='right')
         axs[i].spines['top'].set_visible(False)
         axs[i].spines['right'].set_visible(False)
         i += 1
