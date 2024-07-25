@@ -40,8 +40,12 @@ def main():
     os.makedirs(args.root, exist_ok=True)
 
     for mgf_dir in args.mgf_dirs:
-        os.makedirs(os.path.join(args.root, os.path.basename(mgf_dir)),
-                    exist_ok=True)
+
+        out_dir = os.path.join(args.root, os.path.basename(mgf_dir))
+        # N.B. Hack to skip existing files.
+        if os.path.isfile(out_dir):
+            continue
+        os.makedirs(out_dir, exist_ok=True)
         mgf_filenames = glob.glob(os.path.join(mgf_dir, "*.mgf"))
         random.shuffle(mgf_filenames)
         total_spectra = 0
