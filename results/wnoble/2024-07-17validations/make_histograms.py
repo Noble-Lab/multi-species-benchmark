@@ -34,6 +34,7 @@ def main():
     for species in match_df.keys():
         axs[i].hist(match_df[species], density=True, bins=100)
         axs[i].set_title(re.sub("-", " ", species), loc='right')
+        axs[i].set_xlim(0,60)
         axs[i].set_ylim(0,0.1)
         axs[i].spines['top'].set_visible(False)
         axs[i].spines['right'].set_visible(False)

@@ -45,9 +45,11 @@
 # 'log.txt' provide details including the full command line for each
 # command, and 'params.txt' provide listings of all parameters.
 
-# At the end, the script generates a series of six zip files,
-# containing the raw data, the intermediate files, and each of the
-# four benchmarks.
+# At the end, the script generates a series of zip files containing
+# the raw data, the intermediate files, and each of the four
+# benchmarks. Note that there are two variants of each benchmark, one
+# with a single MGF per species and one where the spectra per species
+# are separated into multiple MGF files.
 
 source ~/.bashrc
 conda activate pyteomics
@@ -103,8 +105,8 @@ benchmark4=nine-species-balanced
 # Directory of scripts.
 bin=../../../bin
 
-for mgf_dir in $root/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
-    species=`basename $mgf_dir`
+for species in `awk '{print $2}' $driver`; do
+    mgf_dir=$root/$species
 
     # Create the index.
     index=$species/tide-index
@@ -167,6 +169,7 @@ for mgf_dir in $root/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
 
     done
 done
+
 $bin/summarize_benchmark.py \
     --data_dir $root \
     --driver_filename $driver \
@@ -191,8 +194,8 @@ $bin/summarize_benchmark.py \
 
 # Approximately balance size of subsets.
 $bin/downsample_benchmark.py --num_spectra 100000 \
-                                     --root $benchmark4 \
-                                     $benchmark3/* 
+    --root $benchmark4 \
+    $benchmark3/* 
 $bin/summarize_benchmark.py \
     --data_dir $root \
     --driver_filename $driver \
@@ -201,12 +204,10 @@ $bin/summarize_benchmark.py \
 
 # For each benchmark, create one MGF per species.
 for benchmark in $benchmark1 $benchmark2 $benchmark3 $benchmark4; do
-    for species in $benchmark/{Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*; do
-        species=`basename $species`
+    for species in `awk '{print $2}' $driver`; do
         cat $benchmark/$species/*.mgf > $benchmark/$species.mgf
     done
 done
-
 
 # Package everything up into zip files.
 #zip nine-species.data.zip \
@@ -222,8 +223,16 @@ zip nine-species.intermediate.zip \
     {Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/percolator.log.txt
 
 for benchmark in $benchmark1 $benchmark2 $benchmark3 $benchmark4; do
-    zip -r nine-species.$benchmark.zip \
+
+    # Make a version with one MGF per species.
+    zip nine-species.$benchmark.zip \
         $benchmark.html \
         $benchmark.txt \
-        $benchmark
+        $benchmark.mgf
+
+    # Make a version with separate MGF files.
+    zip nine-species.$benchmark-separate.zip \
+        $benchmark.html \
+        $benchmark.txt \
+        $benchmark/*.mgf
 done
