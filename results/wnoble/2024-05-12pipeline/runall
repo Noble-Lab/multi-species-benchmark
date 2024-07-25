@@ -30,7 +30,7 @@
 # peptides are considered the same if they have the same sequence but
 # different PTMs. The third directory is similar to the second, except
 # that peptides are also considered the same if they differ only by
-# isoleucine/leucine. The fourt directory is a balanced version of the
+# isoleucine/leucine. The fourth directory is a balanced version of the
 # third one, in which the number of MGF files is randomly downsampled
 # so that each species has approximately the same number of associated
 # spectra.
