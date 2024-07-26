@@ -34,7 +34,9 @@ def main():
     # Make the barchart.
     fig, ax = plt.subplots()
     fig.set_size_inches(4,8)
-    ax.barh(species, percents)
+    colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
+              'tab:brown', 'tab:pink', 'tab:gray', 'tab:olive']
+    ax.barh(species, percents, color=colors[::-1])
     ax.set_xlabel("Percent identified")
     plt.tight_layout()
     plt.savefig(sys.argv[2])

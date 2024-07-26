@@ -1,0 +1,39 @@
+\documentclass[12pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{url}
+\usepackage[colorlinks]{hyperref}
+\usepackage{graphicx}
+
+\name{William Stafford Noble, Professor\\
+Department of Genome Sciences\\
+University of Washington}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+\begin{letter}{Dr.\ Guy Jones, Senior Editor \\
+{\em Scientific Data}}
+
+\opening{Dear Dr.\ Jones,}
+
+I am pleased to submit a manuscript, ``A multi-species benchmark for training and validating large scale mass spectrometry proteomics machine learning models,'' for consideration for publication in {\em Scientific Data}.
+
+This manuscript describes a dataset that was curated for development of our Casanovo {\em de novo} peptide sequencing model.
+The model is described in the paper, ``Sequence-to-sequence translation from mass spectra to peptides with a transformer model,'' which is currently in press in {\em Nature Communications}.
+The dataset consists of annotated peptide mass spectra derived from nine different species.
+This nine-species benchmark is modeled after the dataset used in a seminal paper from 2017, ``{\em De novo} peptide sequencing by deep learning,'' published by Tran {\em et al.}\ in {\em PNAS}.
+In revisiting that benchmark, we identified a series of significant problems with the original processing pipeline, including incorrect search settings and incomplete separation of train and test sets.
+These problems are described in more detail in the accompanying manuscript.
+Our revised benchmark fixes these problems and makes the data, as well as intermediate files, available via Zenodo.
+
+Please note that, in addition to this benchmark dataset, our forthcoming Casanovo paper makes use of a separate dataset containing 30 million human spectra, derived from the MassIVE-KB database.
+This dataset was initially developed for our paper, ``A learned embedding for efficient joint analysis of millions of mass spectra,'' by Bittremieux {\em et al.}, published in {\em Nature Methods} in 2022.
+We are preparing separate manuscript describing this dataset, which we intend to submit to {\em Scientific Data} in the coming weeks.
+
+Thank you for considering our manuscript for review.
+
+\closing{Best regards,}
+\end{letter}
+
+\end{document}

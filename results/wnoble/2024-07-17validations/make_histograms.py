@@ -27,12 +27,15 @@ def main():
             print(f"Read {len(match_df[species])} match percentages from " +
                   f"{species}.", file=sys.stderr)
 
+    colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
+              'tab:brown', 'tab:pink', 'tab:gray', 'tab:olive']
+
     # Make the histogram.
     fig, axs = plt.subplots(len(match_df), 1, sharex=True, tight_layout=True)
     fig.set_size_inches(4,8)
     i = 0
     for species in match_df.keys():
-        axs[i].hist(match_df[species], density=True, bins=100)
+        axs[i].hist(match_df[species], density=True, bins=100, color=colors[i])
         axs[i].set_title(re.sub("-", " ", species), loc='right')
         axs[i].set_xlim(0,60)
         axs[i].set_ylim(0,0.1)

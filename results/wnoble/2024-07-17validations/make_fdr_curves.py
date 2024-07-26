@@ -25,6 +25,10 @@ def main():
     plt.xlabel("FDR threshold")
     plt.ylabel("Accepted PSMs")
 
+
+    colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
+              'tab:brown', 'tab:pink', 'tab:gray', 'tab:olive']
+
     i = 0
     for percolator_filename in sys.argv[2:]:
         species = re.sub(
@@ -35,7 +39,7 @@ def main():
         percolator_df = pandas.read_csv(percolator_filename, sep="\t")
         qvalues = percolator_df["q-value"].values.tolist()
 
-        plt.plot(qvalues, range(len(qvalues)), label=species)
+        plt.plot(qvalues, range(len(qvalues)), label=species, color=colors[i])
         i += 1
 
     plt.legend(loc='center right')
