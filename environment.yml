@@ -1,0 +1,12 @@
+name: pyteomics
+channels:
+  - defaults
+dependencies:
+  - matplotlib=3.7.1
+  - numpy=1.24.3
+  - pandas=1.5.3
+  - python=3.10
+  - pip:
+      - pyteomics==4.6.3
+      - pytest==7.4.2
+      - spectrum-utils==0.4.2
