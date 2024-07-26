@@ -44,6 +44,7 @@ def main():
         out_dir = os.path.join(args.root, os.path.basename(mgf_dir))
         # N.B. Hack to skip existing files.
         if os.path.isfile(out_dir):
+            print(f"Skipping {mgf_dir}.", file=sys.stderr)
             continue
         os.makedirs(out_dir, exist_ok=True)
         mgf_filenames = glob.glob(os.path.join(mgf_dir, "*.mgf"))
