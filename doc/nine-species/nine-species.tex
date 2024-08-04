@@ -8,7 +8,7 @@
 
 \newcommand{\fixme}[1]{{\color{red}{\bf #1}\color{black}}}
 
-\title{A multi-species benchmark for training and validating large scale mass spectrometry proteomics machine learning models}
+\title{A multi-species benchmark for training and validating mass spectrometry proteomics machine learning models}
 
 \author[1,2]{William Stafford Noble}
 
@@ -165,6 +165,7 @@ Note that, for one species (\textit{Vigna mungo}) no reference proteome is avail
 
 \subsection*{Database search and FDR control}
 
+\begin{sloppypar}
 We assigned peptide labels to spectra using the Tide search engine followed by post-processing with Percolator.
 In creating the Tide index, we specified specified Cys carbamidomethylation as a static modification and allowed for the following variable modifications: Met oxidation, Asn deamidation, Gln deamidation, N-term acetylation, N-term carbamylation, N-term NH$_{3}$ loss, and the combination of N-term carbamylation and NH$_{3}$ loss by using the tide-index options {\tt --mods-spec 1M+15.994915,\allowbreak 1N+0.984016,\allowbreak 1Q+0.984016 --nterm-peptide-mods-spec 1X+42.010565,\allowbreak 1X+43.005814,\allowbreak 1X-17.026549,\allowbreak 1X+25.980265 --max-mods 3}.
 Note that one of the nine experiments (\textit{Mus musculus}) was performed using SILAC labeling, but we searched without SILAC modifications and hence include in the benchmark only PSMs from unlabeled peptides.
@@ -175,6 +176,7 @@ All search results were then analyzed jointly per species using the Crux impleme
 For the benchmark, we retained all PSMs with Percolator q value $<$ 0.01.
 We identified 13 MGF files with fewer than 100 accepted PSMs, and we eliminated all of these PSMs from the benchmark.
 At this point in the processing pipeline, the dataset contains 2,898,611 annotated spectra (PSMs)  drawn from 339 RAW files and associated with 179,256 distinct peptides.
+\end{sloppypar}
 
 \subsection*{Avoiding train/test leakage}
 
@@ -207,7 +209,7 @@ The dataset contains files resulting from various steps in the generation of the
 \item Annotated MGF files for both versions of the benchmark (main and balanced).
 \end{itemize}
 Also included are log files for the steps of the analysis pipeline carried out using Crux \cite{park2008rapid} (Tide indexing, Tide search, and Percolator).
-\fixme{Add Zenodo URLs.}
+The data is available at \url{https://doi.org/10.5281/zenodo.12819175}.
 
 \section*{Technical Validation}
 
@@ -240,7 +242,8 @@ All code required to generate the various benchmarks and to produce the figures 
 \bibliographystyle{unsrt}
 \bibliography{refs} % See https://github.com/Noble-Lab/noble-lab-references
 
-%\paragraph{Author Contributions}
+\paragraph{Author Contributions}
+WSN prepared the dataset, performed the validation experiments, and wrote the manuscript.
 
 \paragraph{Competing Interests}
 The authors declare that they have no competing interests.

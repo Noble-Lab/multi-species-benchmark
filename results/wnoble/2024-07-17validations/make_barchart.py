@@ -38,6 +38,7 @@ def main():
               'tab:brown', 'tab:pink', 'tab:gray', 'tab:olive']
     ax.barh(species, percents, color=colors[::-1])
     ax.set_xlabel("Percent identified")
+    ax.set_yticklabels([])
     plt.tight_layout()
     plt.savefig(sys.argv[2])
 
