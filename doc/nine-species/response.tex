@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry} % Set margins.
+\usepackage{url} % Allow URLs.
+\usepackage{graphicx} % Allow figures
+\usepackage{amsmath} % Allow fancy math.
+\usepackage{amssymb}
+\usepackage{algorithm, algpseudocode} % Format algorithms
+\usepackage[sort&compress]{natbib} % Better bibliography formatting.
+\usepackage{xcolor} % Allow colored text.
+\usepackage{siunitx}
+
+% Turn off indenting.
+\setlength{\parindent}{0pt}
+\setlength\parskip{0.5em plus 0.1em minus 0.2em}
+
+\newcommand{\response}[1]{\vspace*{1ex} \color{blue} \noindent #1 \color{black}
+	\vspace*{2ex}}
+
+\newcommand{\edit}[1]{\begin{quotation}\color{red}\noindent #1
+		\color{black}\end{quotation}}
+
+\newcommand{\myinput}[1]{\begin{quotation}\noindent\color{red}\input{#1}\color{black}\end{quotation}
+\vspace*{1ex}
+}
+
+\usepackage{soul}
+\newcommand{\fixme}[1]{\hl{#1}}
+
+\begin{document}
+
+\noindent
+\today\\[2ex]
+
+\noindent
+Dear Dr.\ Guo:\\[2ex]
+
+We thank you and the reviewers for your kind consideration of our manuscript.
+Below, we address each of the points raised by the two reviewers and describe the changes we have made to the manuscript.
+In what follows, the reviewer's comments are shown in black type, interleaved with our responses (in blue) and, where appropriate, the modified text (in red).
+We have also made the formatting changes that you requested.
+
+Thank you very much for your consideration.\\[2ex]
+
+\noindent
+Best regards,\\[2ex]
+
+\noindent
+William Noble\\
+University of Washington
+
+\clearpage
+\section*{Reviewer 1}
+
+The author pointed out a significant issue in de novo peptide sequencing. I really appreciate his efforts to provide this curated benchmark dataset for the proteomics community. This kind of benchmark dataset is valuable and useful for training high-quality models. However, I have several technical concerns. Here they are:
+
+(1) The author reanalyzed the nine-species dataset using Tide search engine. I highly suggest at least two search engines should be used to make sure the PSMs are correct, since almost every search engine has its own preference.
+
+\response{We agree with you that the choice of search engine introduces a potential bias into the dataset construction.
+  However, mitigating this bias is challenging.
+  If we combine the results of two different search engine, using either a union or an intersection operation, then we sacrifice the ability to rigorously control the FDR among the reported list of discoveries.}
+
+(2) Why did the author only consider the FDR at PSM level? I think the FDR at protein level is commonly used now.
+
+\response{We agree that, in many settings, controlling the FDR at the protein level is appropriate, especially when a study is aimed at characterizing the protein content of a given set of biological samples.
+  However, for constructing a benchmark of PSMs used for training and validating \textit{de novo} sequencing methods, we believe that protein level FDR control is not as relevant.
+  In particular, even if we control the FDR at the protein level, the benchmark needs to report a set of PSMs rather than proteins, and it is not clear how to go from a set of detected proteins to a corresponding collection of confident PSMs.
+  Consider, for example, the widely used ``picked protein'' method for protein-level FDR control \cite{savitski2015scalable}.
+  In the Savitski \textit{et al.}\ (2015) description of this method, each protein is assigned a score equal to the sum of the search engine scores assigned to its peptides.
+  With such an approach, a protein can be detected with high confidence even if one or more of its associated peptides has low scores, as long as some of the peptides have very high scores.
+  Thus, if we include all PSMs associated with a detected peptide in our benchmark, we risk contaminating the benchmark with incorrect PSMs.}
+
+(3) The annotation in MGF is adding the peptide sequence. Is it possible to provide the annotated product ions? For example, which peak is annotated as b5 ion or y3 ion. With these annotations at ion level, this dataset will be more useful.
+
+\response{Yes, we have added to the benchmark a \fixme{what format?} file that provides this annotation.  Here is the corresponding description from the revised manuscript:}
+
+\fixme{[Bill] Write this.}
+
+\clearpage
+\section*{Reviewer 2}
+
+This manuscript describes a new dataset designed for evaluating de novo peptide sequencing algorithms. This new dataset represents an enhancement of the widely-used nine-species dataset, addressing two key issues present in the original dataset:
+
+1. The nine-species dataset incorrectly assigns deamidation modifications to isotopic peaks too frequently.
+
+2. In the nine-species dataset, some peptides are shared across species, which can lead to overly optimistic evaluation outcomes for complex models.
+
+Additionally, a balanced dataset is included for specialized evaluation purposes.
+
+Overall, the dataset generation process is clearly outlined, but some important statistical numbers reported about the generation process need clarification. Specifically, on page 4, in the section titled ``Database Search and FDR Control," the manuscript states that ``At this point... the dataset contains 179,256 distinct peptides." Then, in the next section, it mentions ``Among the 229,984 unique peptides," and after further processing, ``The final, non-redundant benchmark dataset (`main') consists of... 258,105 distinct peptides." It is unclear how these three numbers of peptides are related, and what distinguishes ``unique peptides" from ``distinct peptides." Clarifying these relationships and definitions is essential for assessing the quality of the dataset generation process.
+
+\response{We apologize for the confusion, and we thank the reviewer for pointing out the inconsistency in the reported numbers of peptides in the benchmark.
+  We have fixed a bug in the way that our scripts handle PTM annotations in sequences, and the tables in the manuscript as well as the Zenodo files have been updated accordingly.
+  \fixme{[Bill] Finish making these changes.}
+  We previously used the term ``unique'' and ``distinct'' interchangeably, and in the revised version of the manuscript we stick to ``distinct.''
+}
+
+\bibliographystyle{unsrt}
+\bibliography{refs}
+
+\end{document}
