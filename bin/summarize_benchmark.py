@@ -36,7 +36,7 @@ def i2l(peptide):
 def clean_peptide (peptide):
     "Remove PTMs."
 
-    return i2l(re.sub(r"[0-9\.\[\]]+", "", peptide))
+    return i2l(re.sub(r"[0-9\.\[\]\+\-]+", "", peptide))
     
 
 def count_peptides(mgf_filenames, output_filename):
@@ -52,7 +52,8 @@ def count_peptides(mgf_filenames, output_filename):
                     peptides[clean_peptide(line.rstrip().split("=")[1])] = True
 
     with open(output_filename, "w") as output_file:
-        print(list(peptides.keys()).join("\n"), file=output_file)
+        print(f"Printing peptides to {output_filename}.\n", file=sys.stderr)
+        print("\n".join(sorted(list(peptides.keys()))), file=output_file)
 
     return len(peptides)
                             
@@ -99,9 +100,11 @@ def main():
         output["#mgf"].append(len(benchmark_mgfs))
         output["#spectra"].append(count_spectra(data_mgfs))
         output["#PSMs"].append(count_spectra(benchmark_mgfs))
-        output["#peptides"].append(count_peptides(benchmark_mgfs),
-                                   os.path.join(args.benchmark_dir, species,
-                                                "peptides.txt"))
+        output["#peptides"].append(
+            count_peptides(benchmark_mgfs,
+                           os.path.join(args.benchmark_dir, species,
+                                        "peptides.txt"))
+        )
 
     output["precursor"] = list(driver[2])
     output["fragment"] = list(driver[3])

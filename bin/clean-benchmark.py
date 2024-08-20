@@ -48,7 +48,7 @@ def i2l(peptide):
 def clean_peptide (peptide, do_i2l):
     "Remove flanking amino acids and PTMs."
 
-    no_mods = re.sub(r"[0-9\.\[\]]+", "", peptide)
+    no_mods = re.sub(r"[0-9\.\[\]\+\-]+", "", peptide)
 
     if do_i2l:
         return i2l(no_mods)
