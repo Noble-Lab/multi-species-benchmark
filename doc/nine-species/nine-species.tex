@@ -181,7 +181,7 @@ At this point in the processing pipeline, the dataset contains 2,898,611 annotat
 \subsection*{Avoiding train/test leakage}
 
 To avoid train/test leakage, we post-processed the PSMs to eliminate peptides that are shared between species.
-Among the 229,984 unique peptides, we identified 3797 (1.7\%) that occur in more than one species.
+Among the 229,984 distinct peptides, we identified 3797 (1.7\%) that occur in more than one species.
 For each such peptide, we selected one of the associated species at random and then eliminated all PSMs containing that peptide in other species.
 Note that when identifying shared peptides between species, we considered all modified forms of a given peptide sequence to be the same, and we converted all isoleucines to leucines.
 Hence, if a given peptide appears in more than one species, then that peptide, including all its modified forms, is randomly assigned to a single species and eliminated from the others.

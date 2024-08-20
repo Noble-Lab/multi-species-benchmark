@@ -39,9 +39,10 @@ def clean_peptide (peptide):
     return i2l(re.sub(r"[0-9\.\[\]]+", "", peptide))
     
 
-def count_peptides(mgf_filenames):
+def count_peptides(mgf_filenames, output_filename):
     """Count number of distinct peptides in a set of MGF files.  Eliminates
-    modifications and converts isoleucines first."""
+    modifications and converts isoleucines first.  Prints a list of peptides
+    to the given file."""
 
     peptides = {} # Key = peptide, value = True
     for mgf_filename in mgf_filenames:
@@ -49,6 +50,9 @@ def count_peptides(mgf_filenames):
             for line in mgf_file:
                 if line.startswith("SEQ="):
                     peptides[clean_peptide(line.rstrip().split("=")[1])] = True
+
+    with open(output_filename, "w") as output_file:
+        print(list(peptides.keys()).join("\n"), file=output_file)
 
     return len(peptides)
                             
@@ -95,7 +99,9 @@ def main():
         output["#mgf"].append(len(benchmark_mgfs))
         output["#spectra"].append(count_spectra(data_mgfs))
         output["#PSMs"].append(count_spectra(benchmark_mgfs))
-        output["#peptides"].append(count_peptides(benchmark_mgfs))
+        output["#peptides"].append(count_peptides(benchmark_mgfs),
+                                   os.path.join(args.benchmark_dir, species,
+                                                "peptides.txt"))
 
     output["precursor"] = list(driver[2])
     output["fragment"] = list(driver[3])

@@ -1,5 +1,6 @@
 all: nine-species.pdf \
-	cover-letter.pdf
+	cover-letter.pdf \
+	response.pdf
 
 %.pdf: %.tex
 	xelatex $*.tex
