@@ -90,7 +90,10 @@ Overall, the dataset generation process is clearly outlined, but some important 
 
 \response{We apologize for the confusion, and we thank the reviewer for pointing out the inconsistency in the reported numbers of peptides in the benchmark.
   We have fixed a bug in the way that our scripts handle PTM annotations in sequences, and the tables in the manuscript as well as the Zenodo files have been updated accordingly.
-  \fixme{[Bill] Finish making these changes.}
+  In the new version, there are 168,422 distinct peptides after the initial construction of the benchmark.
+  This number remains the same after eliminating overlaps (since each distinct peptide is randomly assigned to a single species, as described in the text).
+  The downsampled benchmark contains 133,232 distinct peptides.
+
   We previously used the term ``unique'' and ``distinct'' interchangeably, and in the revised version of the manuscript we stick to ``distinct.''
 }
 

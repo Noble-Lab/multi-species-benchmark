@@ -10,19 +10,18 @@
 
 \title{A multi-species benchmark for training and validating mass spectrometry proteomics machine learning models}
 
-\author[1,2]{William Stafford Noble}
+\author[1]{Wout Bittremieux}
+\author[2,3]{William Stafford Noble\footnote{Correspondence: william-noble@uw.edu}}
 
-\affil[1]{Department of Genome Sciences, University of Washington}
-\affil[2]{Paul G.\ Allen School of Computer Science and Engineering, University of Washington}
+\affil[1]{Department of Computer Science, University of Antwerp, Belgium}
+\affil[2]{Department of Genome Sciences, University of Washington, Seattle, WA, USA}
+\affil[3]{Paul G.\ Allen School of Computer Science and Engineering, University of Washington, Seattle, WA, USA}
 
 \date{}
 
 \begin{document}
 
 \maketitle
-
-%Instructions at
-%  \url{https://www.nature.com/sdata/publish/submission-guidelines}.}
 
 \begin{abstract}
   Training machine learning models for tasks such as \textit{de novo} sequencing or spectral clustering requires large collections of confidently identified spectra.
@@ -116,25 +115,34 @@ PRIDE & Species & Uniprot & Files & Spectra &
 & & & & & PSM & Pep  & PSM & Pep  \\
 \hline
 PXD005025 & \textit{Vigna mungo} & UP000087766 & 24 & 932,848 &
-108,756 & 13,768 & 102,576 & 13,656 & 20 & 0.05 \\
+108,402 & 11,638 & 102,255 & 11,557
+& 20 & 0.05 \\
 PXD004948 & \textit{Mus musculus} & UP000000589 & 13 & 306,786 & 
-25,490 & 6833 & 25,490 & 6833 & 10 & 0.05 \\
+25,522 & 5630 & 25,522 & 5630
+& 10 & 0.05 \\
 PXD004325 & \textit{Methanosarcina mazei} & UP000033058  & 72 & 3,728,183 &
-267,269 & 23,448 & 100,517 & 16,774 & 10 & 0.05 \\
- PXD004565 & \textit{Bacillus subtilis} & UP000001570 & 106 & 4,336,428 &
-1,357,908 & 64,025 & 113,613 & 29,245 & 30 & 0.05 \\
+267,183 & 15,220 & 100,485 & 11,934
+& 10 & 0.05 \\
+PXD004565 & \textit{Bacillus subtilis} & UP000001570 & 106 & 4,336,428 &
+1,351,938 & 28,364 & 113,234 & 17,481
+& 30 & 0.05 \\
 PXD004536 & \textit{Candidatus endoloripes} & UP000094849 & 11 & 2,272,023 &
-82,204 & 10,863 & 82,204 & 10,863 & 20 & 0.05 \\
+82,514 & 8080 & 82,514 & 8080
+& 20 & 0.05 \\
 PXD004947 & \textit{Solanum lycopersicum} & UP000004994 & 60 & 603,506 &
-177,941 & 62,294 & 100,325 & 44,052 & 15 & 0.05 \\
+177,553 & 48,459 & 100,056 & 35,787
+& 15 & 0.05 \\
 PXD003868 & \textit{Saccharomyces-cerevisiae} & UP000002311 & 27 & 1,477,397 &
-586,278 & 33,008 & 109,023 & 20,057 & 20 & 0.05 \\
+585,846 & 19,102 & 108,973 & 13,285
+& 20 & 0.05 \\
 PXD004467 & \textit{Apis mellifera} & UP000005203 & 17 & 823,169 &
-193,437 & 30,013 & 101,700 & 24,905 & 20 & 0.05 \\
+194,604 & 21,081 & 102,285 & 18,630
+& 20 & 0.05 \\
 PXD004424 & \textit{H.\ sapiens} & UP000005640 & 26 & 684,821 &
-44,348 & 13,853 & 44,348 & 13,853 & 20 & 0.02 \\
+44,555 & 10,848 & 44,555 & 10,848
+& 20 & 0.02 \\
 \hline
-Total & & & 343 & 15,165,161  & 2,843,631 & 258,105 & 779,796 & 180,238  \\
+Total & & & 343 & 15,165,161  & 2,838,117 & 168,422 & 779,879 & 133,232 \\
 \end{tabular}
 \caption{{\bf Two versions of the nine-species benchmark.}
   Counts of the number of annotated spectra and distinct peptide sequences are provided for the main and balanced versions of the benchmark.
@@ -175,17 +183,17 @@ The search engine employed XCorr scoring with Tailor calibration \cite{sulimov20
 All search results were then analyzed jointly per species using the Crux implementation of Percolator, with default parameters.
 For the benchmark, we retained all PSMs with Percolator q value $<$ 0.01.
 We identified 13 MGF files with fewer than 100 accepted PSMs, and we eliminated all of these PSMs from the benchmark.
-At this point in the processing pipeline, the dataset contains 2,898,611 annotated spectra (PSMs)  drawn from 339 RAW files and associated with 179,256 distinct peptides.
+At this point in the processing pipeline, the dataset contains 2,898,611 annotated spectra (PSMs)  drawn from 339 RAW files and associated with 168,422 distinct peptides.
 \end{sloppypar}
 
 \subsection*{Avoiding train/test leakage}
 
 To avoid train/test leakage, we post-processed the PSMs to eliminate peptides that are shared between species.
-Among the 229,984 distinct peptides, we identified 3797 (1.7\%) that occur in more than one species.
+Among the 168,422 distinct peptides, we identified 4121 (2.4\%) that occur in more than one species.
 For each such peptide, we selected one of the associated species at random and then eliminated all PSMs containing that peptide in other species.
 Note that when identifying shared peptides between species, we considered all modified forms of a given peptide sequence to be the same, and we converted all isoleucines to leucines.
 Hence, if a given peptide appears in more than one species, then that peptide, including all its modified forms, is randomly assigned to a single species and eliminated from the others.
-The final, non-redundant benchmark dataset (``main'') consists of 2,843,631 PSMs corresponding to 258,105 distinct peptides.
+The final, non-redundant benchmark dataset (``main'') consists of 2,838,117 PSMs corresponding to 168,422 distinct peptides.
 
 \subsection*{Balancing the benchmark}
 
@@ -196,7 +204,7 @@ Downsampling all of the other eight species to have 25,000 PSMs would reduce the
 To avoid producing such a small dataset, we therefore opted to downsample each dataset to approximately 100,000 PSMs.
 This approach yields a slight imbalance, because three species have fewer than 100,000 PSMs (44,604 for \textit{H.\ sapiens} and 82,290 for \textit{Candidatus endoloripes}), while retaining a larger percentage of the original data.
 Our downsampling procedure involved randomly permuting the order of the MGF files for each species and then selecting the files in order until at least 100,000 PSMs have been accepted.
-The final, balanced benchmark dataset is approximately one quarter the size of the main benchmark, consisting of 779,796 PSMs from 180,238 distinct peptides.
+The final, balanced benchmark dataset is approximately one quarter the size of the main benchmark, consisting of 779,879 PSMs from 133,232 distinct peptides.
 
 \section*{Data Records}
 
