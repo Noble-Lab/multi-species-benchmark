@@ -52,7 +52,6 @@ def count_peptides(mgf_filenames, output_filename):
                     peptides[clean_peptide(line.rstrip().split("=")[1])] = True
 
     with open(output_filename, "w") as output_file:
-        print(f"Printing peptides to {output_filename}.\n", file=sys.stderr)
         print("\n".join(sorted(list(peptides.keys()))), file=output_file)
 
     return len(peptides)
