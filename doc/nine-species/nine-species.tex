@@ -11,6 +11,7 @@
 \title{A multi-species benchmark for training and validating mass spectrometry proteomics machine learning models}
 
 \author[1]{Wout Bittremieux}
+\author[2]{Bo Wen}
 \author[2,3]{William Stafford Noble\footnote{Correspondence: william-noble@uw.edu}}
 
 \affil[1]{Department of Computer Science, University of Antwerp, Belgium}
@@ -214,7 +215,7 @@ The dataset contains files resulting from various steps in the generation of the
 \item Reference proteome files in FASTA format, downloaded from Uniprot.
 \item Search results files for both targets and decoys, in tab-delimited format, produced by Tide.
 \item PSM-level Percolator results files for targets, in tab-delimited format.
-\item Annotated MGF files for both versions of the benchmark (main and balanced).
+`\item Annotated MGF and corresponding mzSpecLib \cite{klein2024proteomics} files for both versions of the benchmark (main and balanced).
 \end{itemize}
 Also included are log files for the steps of the analysis pipeline carried out using Crux \cite{park2008rapid} (Tide indexing, Tide search, and Percolator).
 The data is available at \url{https://doi.org/10.5281/zenodo.12819175}.
@@ -224,9 +225,9 @@ The data is available at \url{https://doi.org/10.5281/zenodo.12819175}.
 \begin{figure}
   \centering
   \begin{tabular}{lll}
-    \includegraphics[height=4in]{../../results/wnoble/2024-07-17validations/nine-species-fdrs.pdf} &
-    \includegraphics[height=4in]{../../results/wnoble/2024-07-17validations/percent-id.pdf}  &
-    \includegraphics[height=4in]{../../results/wnoble/2024-07-17validations/match-by.pdf}  \\
+    \includegraphics[height=4in]{nine-species-fdrs.pdf} &
+    \includegraphics[height=4in]{percent-id.pdf}  &
+    \includegraphics[height=4in]{match-by.pdf}  \\
     a & b & c \\
   \end{tabular}
   \caption{\textbf{Validation of the benchmarks.}
