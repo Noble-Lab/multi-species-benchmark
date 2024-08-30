@@ -111,7 +111,7 @@ In addition, we make available all of the intermediate files, for use in validat
   \scriptsize
 \begin{tabular}{lllrrrrrrrrrr}
 \hline
-PRIDE & Species & Uniprot & Files & Spectra &
+PRIDE & Species & UniProt & Files & Spectra &
 \multicolumn{2}{c}{Main} & \multicolumn{2}{c}{Balanced} & Pre & Frag \\
 & & & & & PSM & Pep  & PSM & Pep  \\
 \hline
@@ -155,7 +155,7 @@ The final two columns specify the precursor window size (in ppm) and fragment bi
 For our benchmark, we used the same nine studies originally identified by Tran {\em et al.} \cite{tran2017denovo}.
 \begin{enumerate}
 \item Paiva \textit{et al.}\ investigated the protein expression response of the cowpea plant (\textit{Vigna unguiculata}) to infection by \textit{Cowpsea severe mosaic virus} (CSMV) by carrying out label-free proteomic analysis of cowpea leaves that were inoculated with CSMV compared to mock inoculation controls \cite{paiva2016label}.
-\item Nevo \textit{et al.}\ studied a rare autosomal recessive lysosomal storage disorder, cystinosis, by carrying out SILAC proteomic analysis of engineered mouse cell lines that harbor a known pathenogenic mutation of the causative gene, \textit{CTNS} \cite{nevo2017impact}.
+\item Nevo \textit{et al.}\ studied a rare autosomal recessive lysosomal storage disorder, cystinosis, by carrying out SILAC proteomic analysis of engineered mouse cell lines that harbor a known pathogenic mutation of the causative gene, \textit{CTNS} \cite{nevo2017impact}.
 \item Cassidy \textit{et al.}\ evaluated two different analytical approaches for carrying out full proteome analysis while identifying short open reading frames: a high/low pH reversed phase LC-MS bottom-up approach and a semi-top-down strategy involving separation of proteins in a GelFree system followed by digestion and LC-MS analysis \cite{cassidy2016combination}. The experiments were carried out using the methane producing archaeon \textit{Methanosarcina mazei}.
 \item Reuss \textit{et al.}\ carried out proteomic analyses on a series of minimized strains of the model bacterium, \textit{Bacillus subtilis}, with genomes reduced by $\sim$36\% \cite{reuss2017large}.
 \item Petersen \textit{et al.}\ performed proteomic analysis of \textit{Candidatus endoloripes}, which are bacterial symbionts of the \textit{Lucinidae} family of marine bivalves \cite{petersen2016chemosynthetic}.
@@ -169,14 +169,14 @@ All nine studies were performed using a Thermo Scientific Q Exactive mass spectr
 % The PXD entry says the species is "Vigna mungo (Rice bean) (Black gram); NCBI TaxID: 3915;" but the paper talks about Vinga unguiculata.
 
 We downloaded the RAW files from the corresponding PRIDE projects (Table~\ref{tab:benchmark}) and converted them to MGF format using the ThermoRawFileParser v1.3.4.
-We downloaded the corresponding nine Uniprot reference proteomes and constructed a Tide index for each one, using Crux version 4.2.
+We downloaded the corresponding nine UniProt reference proteomes and constructed a Tide index for each one, using Crux version 4.2.
 Note that, for one species (\textit{Vigna mungo}) no reference proteome is available, so we used the proteome of the closely related species \textit{Vigna radiata}.
 
 \subsection*{Database search and FDR control}
 
 \begin{sloppypar}
 We assigned peptide labels to spectra using the Tide search engine followed by post-processing with Percolator.
-In creating the Tide index, we specified specified Cys carbamidomethylation as a static modification and allowed for the following variable modifications: Met oxidation, Asn deamidation, Gln deamidation, N-term acetylation, N-term carbamylation, N-term NH$_{3}$ loss, and the combination of N-term carbamylation and NH$_{3}$ loss by using the tide-index options {\tt --mods-spec 1M+15.994915,\allowbreak 1N+0.984016,\allowbreak 1Q+0.984016 --nterm-peptide-mods-spec 1X+42.010565,\allowbreak 1X+43.005814,\allowbreak 1X-17.026549,\allowbreak 1X+25.980265 --max-mods 3}.
+In creating the Tide index, we specified Cys carbamidomethylation as a static modification and allowed for the following variable modifications: Met oxidation, Asn deamidation, Gln deamidation, N-term acetylation, N-term carbamylation, N-term NH$_{3}$ loss, and the combination of N-term carbamylation and NH$_{3}$ loss by using the tide-index options {\tt --mods-spec 1M+15.994915,\allowbreak 1N+0.984016,\allowbreak 1Q+0.984016 --nterm-peptide-mods-spec 1X+42.010565,\allowbreak 1X+43.005814,\allowbreak 1X-17.026549,\allowbreak 1X+25.980265 --max-mods 3}.
 Note that one of the nine experiments (\textit{Mus musculus}) was performed using SILAC labeling, but we searched without SILAC modifications and hence include in the benchmark only PSMs from unlabeled peptides.
 Tide automatically added to each index a shuffled decoy peptide corresponding to each target peptide.
 Thereafter, each MGF file was searched against the corresponding index using the precursor window size and fragment bin tolerance specified in the original study (Table~\ref{tab:benchmark}).
@@ -211,8 +211,8 @@ The final, balanced benchmark dataset is approximately one quarter the size of t
 
 The dataset contains files resulting from various steps in the generation of the benchmark:
 \begin{itemize}
-\item Spectrum files in MGF format, produced by msconvert.
-\item Reference proteome files in FASTA format, downloaded from Uniprot.
+\item Spectrum files in MGF format, produced by ThermoRawFileParser.
+\item Reference proteome files in FASTA format, downloaded from UniProt.
 \item Search results files for both targets and decoys, in tab-delimited format, produced by Tide.
 \item PSM-level Percolator results files for targets, in tab-delimited format.
 `\item Annotated MGF \edit{and corresponding mzSpecLib \cite{klein2024proteomics}} files for both versions of the benchmark (main and balanced).
