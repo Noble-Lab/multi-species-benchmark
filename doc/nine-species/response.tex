@@ -66,7 +66,12 @@ The author pointed out a significant issue in de novo peptide sequencing. I real
   Consider, for example, the widely used ``picked protein'' method for protein-level FDR control \cite{savitski2015scalable}.
   In the Savitski \textit{et al.}\ (2015) description of this method, each protein is assigned a score equal to the sum of the search engine scores assigned to its peptides.
   With such an approach, a protein can be detected with high confidence even if one or more of its associated peptides has low scores, as long as some of the peptides have very high scores.
-  Thus, if we include all PSMs associated with a detected peptide in our benchmark, we risk contaminating the benchmark with incorrect PSMs.}
+  Thus, if we include all PSMs associated with a detected peptide in our benchmark, we risk contaminating the benchmark with incorrect PSMs.
+
+  It is possible that the reviewer is suggesting that we should control the FDR at both the PSM and protein level.
+  This approach would have the converse problem: some PSMs that are correctly detected might be discarded if there is insufficient evidence to accept the protein at the specified FDR threshold.
+  Ultimately, we are creating a benchmark of PSMs, so PSM-level FDR control seemed the most appropriate.
+}
 
 (3) The annotation in MGF is adding the peptide sequence. Is it possible to provide the annotated product ions? For example, which peak is annotated as b5 ion or y3 ion. With these annotations at ion level, this dataset will be more useful.
 
