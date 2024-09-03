@@ -46,10 +46,9 @@
 # command, and 'params.txt' provide listings of all parameters.
 
 # At the end, the script generates a series of zip files containing
-# the raw data, the intermediate files, and each of the four
-# benchmarks. Note that there are two variants of each benchmark, one
-# with a single MGF per species and one where the spectra per species
-# are separated into multiple MGF files.
+# the raw data, the intermediate files, and the last two of the four
+# benchmarks.  Note that the script assumes that the jar file for
+# creating mzlib.txt files has been placed in ../../../bin.
 
 source ~/.bashrc
 conda activate pyteomics
@@ -91,7 +90,7 @@ if [[ ! -e $CRUX ]]; then
 fi
 
 # The location of the MGF annotation tool.
-MGF_ANNOTATE=/net/noble/vol1/home/bwen1/project/Bill-multi-species-benchmark/mgf_annotate-0.0.1/mgf_annotate-0.0.1.jar
+MGF_ANNOTATE=../../../bin/mgf_annotate-0.0.1.jar
 
 # The location of the input MGF and FASTA files.
 root=/net/noble/vol1/data/crux-datasets/2017tran-denovo
@@ -205,16 +204,17 @@ $bin/summarize_benchmark.py \
     --benchmark_dir $benchmark4 \
     --root $benchmark4
 
-# For each benchmark, create one MGF per species and convert to mzSpecLib.
-for benchmark in $benchmark1 $benchmark2 $benchmark3 $benchmark4; do
+# For the two benchmarks we care about, create one MGF per species and
+# convert to mzSpecLib.
+for benchmark in $benchmark3 $benchmark4; do
     for species in `awk '{print $2}' $driver`; do
         cat $benchmark/$species/*.mgf > $benchmark/$species.mgf
-    
+  
         java -jar $MGF_ANNOTATE \
              $benchmark/$species.mgf \
              $benchmark/$species.mzlib.txt
-
     done
+    rm $benchmark/PDV_*.mgf
 done
 
 # Package everything up into zip files.
@@ -230,18 +230,10 @@ zip nine-species-intermediate.zip \
     {Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/percolator.target.psms.txt \
     {Api,Bac,Can,H.-,Met,Mus,Sac,Sol,Vig}*/percolator.log.txt
 
-for benchmark in $benchmark1 $benchmark2 $benchmark3 $benchmark4; do
-
-    # Make a version with one MGF per species.
+for benchmark in $benchmark3 $benchmark4; do
     zip $benchmark.zip \
         $benchmark.html \
         $benchmark.txt \
-        $benchmark.mzlib.txt \
-        $benchmark.mgf
-
-    # Make a version with separate MGF files.
-    zip $benchmark-separate.zip \
-        $benchmark.html \
-        $benchmark.txt \
+        $benchmark/*.mzlib.txt \
         $benchmark/*.mgf
 done
