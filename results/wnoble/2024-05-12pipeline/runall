@@ -47,8 +47,10 @@
 
 # At the end, the script generates a series of zip files containing
 # the raw data, the intermediate files, and the last two of the four
-# benchmarks.  Note that the script assumes that the jar file for
-# creating mzlib.txt files has been placed in ../../../bin.
+# benchmarks. Note that the script assumes that the zip file
+# containing the program to creating mzlib.txt files has been unzipped
+# in ../../../bin. This zip file is associated with the release of
+# this repository.
 
 source ~/.bashrc
 conda activate pyteomics
