@@ -4,25 +4,25 @@
 \usepackage[margin=1in]{geometry} % Set margins.
 \usepackage{xcolor} % Allow colored text.
 \usepackage{url} % Allow URLs.
-\usepackage[sort&compress]{natbib} % Better bibliography formatting.
 
-\newcommand{\fixme}[1]{{\color{red}{\bf #1}\color{black}}}
+\newcommand{\edit}[1]{{\color{red}{#1}\color{black}}}
 
 \title{A multi-species benchmark for training and validating mass spectrometry proteomics machine learning models}
 
-\author[1]{Wout Bittremieux}
-\author[2]{Bo Wen}
-\author[2,3]{William Stafford Noble\footnote{Correspondence: william-noble@uw.edu}}
+\author[1]{Bo Wen}
+\author[1,2]{William Stafford Noble}
 
-\affil[1]{Department of Computer Science, University of Antwerp, Belgium}
-\affil[2]{Department of Genome Sciences, University of Washington, Seattle, WA, USA}
-\affil[3]{Paul G.\ Allen School of Computer Science and Engineering, University of Washington, Seattle, WA, USA}
+\affil[1]{Department of Genome Sciences, University of Washington, Seattle, WA, USA}
+\affil[2]{Paul G.\ Allen School of Computer Science and Engineering, University of Washington, Seattle, WA, USA}
 
 \date{}
 
 \begin{document}
 
 \maketitle
+
+\noindent
+Correspondence: william-noble@uw.edu
 
 \begin{abstract}
   Training machine learning models for tasks such as \textit{de novo} sequencing or spectral clustering requires large collections of confidently identified spectra.
@@ -111,39 +111,39 @@ In addition, we make available all of the intermediate files, for use in validat
   \scriptsize
 \begin{tabular}{lllrrrrrrrrrr}
 \hline
-PRIDE & Species & Uniprot & Files & Spectra &
+PRIDE & Species & UniProt & Files & Spectra &
 \multicolumn{2}{c}{Main} & \multicolumn{2}{c}{Balanced} & Pre & Frag \\
 & & & & & PSM & Pep  & PSM & Pep  \\
 \hline
 PXD005025 & \textit{Vigna mungo} & UP000087766 & 24 & 932,848 &
-108,402 & 11,638 & 102,255 & 11,557
+\edit{108,402} & \edit{11,638} & \edit{102,255} & \edit{11,557}
 & 20 & 0.05 \\
 PXD004948 & \textit{Mus musculus} & UP000000589 & 13 & 306,786 & 
-25,522 & 5630 & 25,522 & 5630
+\edit{25,522} & \edit{5630} & \edit{25,522} & \edit{5630}
 & 10 & 0.05 \\
 PXD004325 & \textit{Methanosarcina mazei} & UP000033058  & 72 & 3,728,183 &
-267,183 & 15,220 & 100,485 & 11,934
+\edit{267,183} & \edit{15,220} & \edit{100,485} & \edit{11,934}
 & 10 & 0.05 \\
 PXD004565 & \textit{Bacillus subtilis} & UP000001570 & 106 & 4,336,428 &
-1,351,938 & 28,364 & 113,234 & 17,481
+\edit{1,351,938} & \edit{28,364} & \edit{113,234} & \edit{17,481}
 & 30 & 0.05 \\
 PXD004536 & \textit{Candidatus endoloripes} & UP000094849 & 11 & 2,272,023 &
-82,514 & 8080 & 82,514 & 8080
+\edit{82,514} & \edit{8080} & \edit{82,514} & \edit{8080}
 & 20 & 0.05 \\
 PXD004947 & \textit{Solanum lycopersicum} & UP000004994 & 60 & 603,506 &
-177,553 & 48,459 & 100,056 & 35,787
+\edit{177,553} & \edit{48,459} & \edit{100,056} & \edit{35,787}
 & 15 & 0.05 \\
 PXD003868 & \textit{Saccharomyces-cerevisiae} & UP000002311 & 27 & 1,477,397 &
-585,846 & 19,102 & 108,973 & 13,285
+\edit{585,846} & \edit{19,102} & \edit{108,973} & \edit{13,285}
 & 20 & 0.05 \\
 PXD004467 & \textit{Apis mellifera} & UP000005203 & 17 & 823,169 &
-194,604 & 21,081 & 102,285 & 18,630
+\edit{194,604} & \edit{21,081} & \edit{102,285} & \edit{18,630}
 & 20 & 0.05 \\
 PXD004424 & \textit{H.\ sapiens} & UP000005640 & 26 & 684,821 &
-44,555 & 10,848 & 44,555 & 10,848
+\edit{44,555} & \edit{10,848} & \edit{44,555} & \edit{10,848}
 & 20 & 0.02 \\
 \hline
-Total & & & 343 & 15,165,161  & 2,838,117 & 168,422 & 779,879 & 133,232 \\
+Total & & & 343 & 15,165,161  & \edit{2,838,117} & \edit{168,422} & \edit{779,879} & \edit{133,232} \\
 \end{tabular}
 \caption{{\bf Two versions of the nine-species benchmark.}
   Counts of the number of annotated spectra and distinct peptide sequences are provided for the main and balanced versions of the benchmark.
@@ -155,7 +155,7 @@ The final two columns specify the precursor window size (in ppm) and fragment bi
 For our benchmark, we used the same nine studies originally identified by Tran {\em et al.} \cite{tran2017denovo}.
 \begin{enumerate}
 \item Paiva \textit{et al.}\ investigated the protein expression response of the cowpea plant (\textit{Vigna unguiculata}) to infection by \textit{Cowpsea severe mosaic virus} (CSMV) by carrying out label-free proteomic analysis of cowpea leaves that were inoculated with CSMV compared to mock inoculation controls \cite{paiva2016label}.
-\item Nevo \textit{et al.}\ studied a rare autosomal recessive lysosomal storage disorder, cystinosis, by carrying out SILAC proteomic analysis of engineered mouse cell lines that harbor a known pathenogenic mutation of the causative gene, \textit{CTNS} \cite{nevo2017impact}.
+\item Nevo \textit{et al.}\ studied a rare autosomal recessive lysosomal storage disorder, cystinosis, by carrying out SILAC proteomic analysis of engineered mouse cell lines that harbor a known pathogenic mutation of the causative gene, \textit{CTNS} \cite{nevo2017impact}.
 \item Cassidy \textit{et al.}\ evaluated two different analytical approaches for carrying out full proteome analysis while identifying short open reading frames: a high/low pH reversed phase LC-MS bottom-up approach and a semi-top-down strategy involving separation of proteins in a GelFree system followed by digestion and LC-MS analysis \cite{cassidy2016combination}. The experiments were carried out using the methane producing archaeon \textit{Methanosarcina mazei}.
 \item Reuss \textit{et al.}\ carried out proteomic analyses on a series of minimized strains of the model bacterium, \textit{Bacillus subtilis}, with genomes reduced by $\sim$36\% \cite{reuss2017large}.
 \item Petersen \textit{et al.}\ performed proteomic analysis of \textit{Candidatus endoloripes}, which are bacterial symbionts of the \textit{Lucinidae} family of marine bivalves \cite{petersen2016chemosynthetic}.
@@ -169,14 +169,14 @@ All nine studies were performed using a Thermo Scientific Q Exactive mass spectr
 % The PXD entry says the species is "Vigna mungo (Rice bean) (Black gram); NCBI TaxID: 3915;" but the paper talks about Vinga unguiculata.
 
 We downloaded the RAW files from the corresponding PRIDE projects (Table~\ref{tab:benchmark}) and converted them to MGF format using the ThermoRawFileParser v1.3.4.
-We downloaded the corresponding nine Uniprot reference proteomes and constructed a Tide index for each one, using Crux version 4.2.
+We downloaded the corresponding nine UniProt reference proteomes and constructed a Tide index for each one, using Crux version 4.2.
 Note that, for one species (\textit{Vigna mungo}) no reference proteome is available, so we used the proteome of the closely related species \textit{Vigna radiata}.
 
 \subsection*{Database search and FDR control}
 
 \begin{sloppypar}
 We assigned peptide labels to spectra using the Tide search engine followed by post-processing with Percolator.
-In creating the Tide index, we specified specified Cys carbamidomethylation as a static modification and allowed for the following variable modifications: Met oxidation, Asn deamidation, Gln deamidation, N-term acetylation, N-term carbamylation, N-term NH$_{3}$ loss, and the combination of N-term carbamylation and NH$_{3}$ loss by using the tide-index options {\tt --mods-spec 1M+15.994915,\allowbreak 1N+0.984016,\allowbreak 1Q+0.984016 --nterm-peptide-mods-spec 1X+42.010565,\allowbreak 1X+43.005814,\allowbreak 1X-17.026549,\allowbreak 1X+25.980265 --max-mods 3}.
+In creating the Tide index, we specified Cys carbamidomethylation as a static modification and allowed for the following variable modifications: Met oxidation, Asn deamidation, Gln deamidation, N-term acetylation, N-term carbamylation, N-term NH$_{3}$ loss, and the combination of N-term carbamylation and NH$_{3}$ loss by using the tide-index options {\tt --mods-spec 1M+15.994915,\allowbreak 1N+0.984016,\allowbreak 1Q+0.984016 --nterm-peptide-mods-spec 1X+42.010565,\allowbreak 1X+43.005814,\allowbreak 1X-17.026549,\allowbreak 1X+25.980265 --max-mods 3}.
 Note that one of the nine experiments (\textit{Mus musculus}) was performed using SILAC labeling, but we searched without SILAC modifications and hence include in the benchmark only PSMs from unlabeled peptides.
 Tide automatically added to each index a shuffled decoy peptide corresponding to each target peptide.
 Thereafter, each MGF file was searched against the corresponding index using the precursor window size and fragment bin tolerance specified in the original study (Table~\ref{tab:benchmark}).
@@ -190,32 +190,32 @@ At this point in the processing pipeline, the dataset contains 2,898,611 annotat
 \subsection*{Avoiding train/test leakage}
 
 To avoid train/test leakage, we post-processed the PSMs to eliminate peptides that are shared between species.
-Among the 168,422 distinct peptides, we identified 4121 (2.4\%) that occur in more than one species.
+Among the \edit{168,422 distinct} peptides, we identified \edit{4121 (2.4\%)} that occur in more than one species.
 For each such peptide, we selected one of the associated species at random and then eliminated all PSMs containing that peptide in other species.
 Note that when identifying shared peptides between species, we considered all modified forms of a given peptide sequence to be the same, and we converted all isoleucines to leucines.
 Hence, if a given peptide appears in more than one species, then that peptide, including all its modified forms, is randomly assigned to a single species and eliminated from the others.
-The final, non-redundant benchmark dataset (``main'') consists of 2,838,117 PSMs corresponding to 168,422 distinct peptides.
+The final, non-redundant benchmark dataset (``main'') consists of \edit{2,838,117} PSMs corresponding to \edit{168,422} distinct peptides.
 
 \subsection*{Balancing the benchmark}
 
 At this stage, the benchmark was quite imbalanced, in the sense that some species had a much larger number of associated PSMs.
 We therefore used a random downsampling procedure to produce a benchmark that is more evenly balanced across species.
-Among the nine species, the one with the fewest PSMs is \textit{Mus musculus}, with 25,541.
+Among the nine species, the one with the fewest PSMs is \textit{Mus musculus}, with \edit{25,522}.
 Downsampling all of the other eight species to have 25,000 PSMs would reduce the size of the dataset from 2.8 million PSMs to 225,000---a reduction of 92\%.
 To avoid producing such a small dataset, we therefore opted to downsample each dataset to approximately 100,000 PSMs.
-This approach yields a slight imbalance, because three species have fewer than 100,000 PSMs (44,604 for \textit{H.\ sapiens} and 82,290 for \textit{Candidatus endoloripes}), while retaining a larger percentage of the original data.
+This approach yields a slight imbalance, because three species have fewer than 100,000 PSMs (\edit{44,555} for \textit{H.\ sapiens} and \edit{82,514} for \textit{Candidatus endoloripes}), while retaining a larger percentage of the original data.
 Our downsampling procedure involved randomly permuting the order of the MGF files for each species and then selecting the files in order until at least 100,000 PSMs have been accepted.
-The final, balanced benchmark dataset is approximately one quarter the size of the main benchmark, consisting of 779,879 PSMs from 133,232 distinct peptides.
+The final, balanced benchmark dataset is approximately one quarter the size of the main benchmark, consisting of \edit{779,879} PSMs from \edit{133,232} distinct peptides.
 
 \section*{Data Records}
 
 The dataset contains files resulting from various steps in the generation of the benchmark:
 \begin{itemize}
-\item Spectrum files in MGF format, produced by msconvert.
-\item Reference proteome files in FASTA format, downloaded from Uniprot.
+\item Spectrum files in MGF format, produced by ThermoRawFileParser.
+\item Reference proteome files in FASTA format, downloaded from UniProt.
 \item Search results files for both targets and decoys, in tab-delimited format, produced by Tide.
 \item PSM-level Percolator results files for targets, in tab-delimited format.
-`\item Annotated MGF and corresponding mzSpecLib \cite{klein2024proteomics} files for both versions of the benchmark (main and balanced).
+`\item Annotated MGF \edit{and corresponding mzSpecLib \cite{klein2024proteomics}} files for both versions of the benchmark (main and balanced).
 \end{itemize}
 Also included are log files for the steps of the analysis pipeline carried out using Crux \cite{park2008rapid} (Tide indexing, Tide search, and Percolator).
 The data is available at \url{https://doi.org/10.5281/zenodo.12819175}.
@@ -248,11 +248,12 @@ Notably, the proportion of matched  b- and y-ions does not appear to be strongly
 \section*{Code Availability}
 All code required to generate the various benchmarks and to produce the figures in this manuscript is available with an Apache license at \url{https://github.com/Noble-Lab/multi-species-benchmark}, with a snapshot of the repository stored at \url{https://zenodo.org/doi/10.5281/zenodo.12926326}.
 
-\bibliographystyle{unsrt}
+\bibliographystyle{naturemag}
 \bibliography{refs} % See https://github.com/Noble-Lab/noble-lab-references
 
 \paragraph{Author Contributions}
 WSN prepared the dataset, performed the validation experiments, and wrote the manuscript.
+\edit{BW edited the manuscript and wrote the code to convert MGF to mzSpecLib.}
 
 \paragraph{Competing Interests}
 The authors declare that they have no competing interests.
