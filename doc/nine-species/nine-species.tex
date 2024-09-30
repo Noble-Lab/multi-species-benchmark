@@ -115,31 +115,31 @@ PRIDE & Species & UniProt & Files & Spectra &
 \multicolumn{2}{c}{Main} & \multicolumn{2}{c}{Balanced} & Pre & Frag \\
 & & & & & PSM & Pep  & PSM & Pep  \\
 \hline
-PXD005025 & \textit{Vigna mungo} & UP000087766 & 24 & 932,848 &
+PXD005025 \cite{paiva2016label} & \textit{Vigna mungo} & UP000087766 & 24 & 932,848 &
 \edit{108,402} & \edit{11,638} & \edit{102,255} & \edit{11,557}
 & 20 & 0.05 \\
-PXD004948 & \textit{Mus musculus} & UP000000589 & 13 & 306,786 & 
+PXD004948 \cite{nevo2017impact} & \textit{Mus musculus} & UP000000589 & 13 & 306,786 & 
 \edit{25,522} & \edit{5630} & \edit{25,522} & \edit{5630}
 & 10 & 0.05 \\
-PXD004325 & \textit{Methanosarcina mazei} & UP000033058  & 72 & 3,728,183 &
+PXD004325 \cite{cassidy2016combination} & \textit{Methanosarcina mazei} & UP000033058  & 72 & 3,728,183 &
 \edit{267,183} & \edit{15,220} & \edit{100,485} & \edit{11,934}
 & 10 & 0.05 \\
-PXD004565 & \textit{Bacillus subtilis} & UP000001570 & 106 & 4,336,428 &
+PXD004565 \cite{reuss2017large} & \textit{Bacillus subtilis} & UP000001570 & 106 & 4,336,428 &
 \edit{1,351,938} & \edit{28,364} & \edit{113,234} & \edit{17,481}
 & 30 & 0.05 \\
-PXD004536 & \textit{Candidatus endoloripes} & UP000094849 & 11 & 2,272,023 &
+PXD004536 \cite{petersen2016chemosynthetic} & \textit{Candidatus endoloripes} & UP000094849 & 11 & 2,272,023 &
 \edit{82,514} & \edit{8080} & \edit{82,514} & \edit{8080}
 & 20 & 0.05 \\
-PXD004947 & \textit{Solanum lycopersicum} & UP000004994 & 60 & 603,506 &
+PXD004947 \cite{mata2017depth} & \textit{Solanum lycopersicum} & UP000004994 & 60 & 603,506 &
 \edit{177,553} & \edit{48,459} & \edit{100,056} & \edit{35,787}
 & 15 & 0.05 \\
-PXD003868 & \textit{Saccharomyces-cerevisiae} & UP000002311 & 27 & 1,477,397 &
+PXD003868 \cite{seidel2017quantitative} & \textit{Saccharomyces-cerevisiae} & UP000002311 & 27 & 1,477,397 &
 \edit{585,846} & \edit{19,102} & \edit{108,973} & \edit{13,285}
 & 20 & 0.05 \\
-PXD004467 & \textit{Apis mellifera} & UP000005203 & 17 & 823,169 &
+PXD004467 \cite{hu2016proteome} & \textit{Apis mellifera} & UP000005203 & 17 & 823,169 &
 \edit{194,604} & \edit{21,081} & \edit{102,285} & \edit{18,630}
 & 20 & 0.05 \\
-PXD004424 & \textit{H.\ sapiens} & UP000005640 & 26 & 684,821 &
+PXD004424 \cite{cypryk2017proteomic} & \textit{H.\ sapiens} & UP000005640 & 26 & 684,821 &
 \edit{44,555} & \edit{10,848} & \edit{44,555} & \edit{10,848}
 & 20 & 0.02 \\
 \hline
@@ -168,7 +168,7 @@ All nine studies were performed using a Thermo Scientific Q Exactive mass spectr
 
 % The PXD entry says the species is "Vigna mungo (Rice bean) (Black gram); NCBI TaxID: 3915;" but the paper talks about Vinga unguiculata.
 
-We downloaded the RAW files from the corresponding PRIDE projects (Table~\ref{tab:benchmark}) and converted them to MGF format using the ThermoRawFileParser v1.3.4.
+We downloaded the RAW files from the corresponding PRIDE projects (Table~\ref{tab:benchmark}) and converted them to MGF format using the ThermoRawFileParser v1.3.4 \cite{hulstaert:thermorawfileparser}.
 We downloaded the corresponding nine UniProt reference proteomes and constructed a Tide index for each one, using Crux version 4.2.
 Note that, for one species (\textit{Vigna mungo}) no reference proteome is available, so we used the proteome of the closely related species \textit{Vigna radiata}.
 
