@@ -5,8 +5,6 @@
 \usepackage{xcolor} % Allow colored text.
 \usepackage{url} % Allow URLs.
 
-\newcommand{\edit}[1]{{\color{red}{#1}\color{black}}}
-
 \title{A multi-species benchmark for training and validating mass spectrometry proteomics machine learning models}
 
 \author[1]{Bo Wen}
@@ -77,35 +75,6 @@ In addition, we make available all of the intermediate files, for use in validat
 
 \subsection*{Data sets}
 
-%% Species & #raw & #mgf & #spectra & #PSMs & #peptides & #PSMs & #peptides & precursor & fragment
-%% \hline
-%% \textit{Vigna mungo} & 24 & 23 & 932848 & 108756 & 13768 & 102576 & 13656 & 20 & 0.05
-%% \textit{Mus musculus} & 13 & 9 & 306786 & 25490 & 6833 & 25490 & 6833 & 10 & 0.05
-%% \textit{Methanosarcina mazei} & 72 & 26 & 3728183 & 267269 & 23448 & 100517 & 16774 & 10 & 0.05
-%% \textit{Bacillus subtilis} & 106 & 9 & 4336428 & 1357908 & 64025 & 113613 & 29245 & 30 & 0.05
-%% \textit{Candidatus endoloripes} & 11 & 11 & 2272023 & 82204 & 10863 & 82204 & 10863 & 20 & 0.05
-%% \textit{Solanum lycopersicum} & 60 & 33 & 603506 & 177941 & 62294 & 100325 & 44052 & 15 & 0.05
-%% \textit{Saccharomyces cerevisiae} & 27 & 5 & 1477397 & 586278 & 33008 & 109023 & 20057 & 20 & 0.05
-%% \textit{Apis mellifera} & 17 & 8 & 823169 & 193437 & 30013 & 101700 & 24905 & 20 & 0.05
-%% \textit{H. sapiens} & 26 & 26 & 684821 & 44348 & 13853 & 44348 & 13853 & 20 & 0.02
-%% Total & 356 & 150 & 15165161 & 2843631 & 258105 & 779796 & 180238 
-%% \hline
-
-%% \hline
-%% Species & #raw & #mgf & #spectra & #PSMs & #peptides & #PSMs & #peptides & precursor & fragment
-%% \hline
-%% \textit{Vigna mungo} & 24 & 23 & 932848 
-%% \textit{Mus musculus} & 13 & 9 & 306786 
-%% \textit{Methanosarcina mazei} & 72 & 26 &
-%% \textit{Bacillus subtilis} & 106 & 9 &
-%% \textit{Candidatus endoloripes} & 11 & 11 & 2272023 & 
-%% \textit{Solanum lycopersicum} & 60 & 33 & 603506 & 
-%% \textit{Saccharomyces cerevisiae} & 27 & 5 & 1477397 & 
-%% \textit{Apis mellifera} & 17 & 8 & 823169 & 
-%% \textit{H. sapiens} & 26 & 26 & 684821 & 
-%% Total & 356 & 150 & 15165161 & 
-%% \hline
-
 \begin{table}
   \centering
   \scriptsize
@@ -116,34 +85,34 @@ PRIDE & Species & UniProt & Files & Spectra &
 & & & & & PSM & Pep  & PSM & Pep  \\
 \hline
 PXD005025 & \textit{Vigna mungo} & UP000087766 & 24 & 932,848 &
-\edit{108,402} & \edit{11,638} & \edit{102,255} & \edit{11,557}
+108,402 & 11,638 & 102,255 & 11,557
 & 20 & 0.05 \\
 PXD004948 & \textit{Mus musculus} & UP000000589 & 13 & 306,786 & 
-\edit{25,522} & \edit{5630} & \edit{25,522} & \edit{5630}
+25,522 & 5630 & 25,522 & 5630
 & 10 & 0.05 \\
 PXD004325 & \textit{Methanosarcina mazei} & UP000033058  & 72 & 3,728,183 &
-\edit{267,183} & \edit{15,220} & \edit{100,485} & \edit{11,934}
+267,183 & 15,220 & 100,485 & 11,934
 & 10 & 0.05 \\
 PXD004565 & \textit{Bacillus subtilis} & UP000001570 & 106 & 4,336,428 &
-\edit{1,351,938} & \edit{28,364} & \edit{113,234} & \edit{17,481}
+1,351,938 & 28,364 & 113,234 & 17,481
 & 30 & 0.05 \\
 PXD004536 & \textit{Candidatus endoloripes} & UP000094849 & 11 & 2,272,023 &
-\edit{82,514} & \edit{8080} & \edit{82,514} & \edit{8080}
+82,514 & 8080 & 82,514 & 8080
 & 20 & 0.05 \\
 PXD004947 & \textit{Solanum lycopersicum} & UP000004994 & 60 & 603,506 &
-\edit{177,553} & \edit{48,459} & \edit{100,056} & \edit{35,787}
+177,553 & 48,459 & 100,056 & 35,787
 & 15 & 0.05 \\
 PXD003868 & \textit{Saccharomyces-cerevisiae} & UP000002311 & 27 & 1,477,397 &
-\edit{585,846} & \edit{19,102} & \edit{108,973} & \edit{13,285}
+585,846 & 19,102 & 108,973 & 13,285
 & 20 & 0.05 \\
 PXD004467 & \textit{Apis mellifera} & UP000005203 & 17 & 823,169 &
-\edit{194,604} & \edit{21,081} & \edit{102,285} & \edit{18,630}
+194,604 & 21,081 & 102,285 & 18,630
 & 20 & 0.05 \\
 PXD004424 & \textit{H.\ sapiens} & UP000005640 & 26 & 684,821 &
-\edit{44,555} & \edit{10,848} & \edit{44,555} & \edit{10,848}
+44,555 & 10,848 & 44,555 & 10,848
 & 20 & 0.02 \\
 \hline
-Total & & & 343 & 15,165,161  & \edit{2,838,117} & \edit{168,422} & \edit{779,879} & \edit{133,232} \\
+Total & & & 343 & 15,165,161  & 2,838,117 & 168,422 & 779,879 & 133,232 \\
 \end{tabular}
 \caption{{\bf Two versions of the nine-species benchmark.}
   Counts of the number of annotated spectra and distinct peptide sequences are provided for the main and balanced versions of the benchmark.
@@ -190,22 +159,22 @@ At this point in the processing pipeline, the dataset contains 2,898,611 annotat
 \subsection*{Avoiding train/test leakage}
 
 To avoid train/test leakage, we post-processed the PSMs to eliminate peptides that are shared between species.
-Among the \edit{168,422 distinct} peptides, we identified \edit{4121 (2.4\%)} that occur in more than one species.
+Among the 168,422 distinct peptides, we identified 4121 (2.4\%) that occur in more than one species.
 For each such peptide, we selected one of the associated species at random and then eliminated all PSMs containing that peptide in other species.
 Note that when identifying shared peptides between species, we considered all modified forms of a given peptide sequence to be the same, and we converted all isoleucines to leucines.
 Hence, if a given peptide appears in more than one species, then that peptide, including all its modified forms, is randomly assigned to a single species and eliminated from the others.
-The final, non-redundant benchmark dataset (``main'') consists of \edit{2,838,117} PSMs corresponding to \edit{168,422} distinct peptides.
+The final, non-redundant benchmark dataset (``main'') consists of 2,838,117 PSMs corresponding to 168,422 distinct peptides.
 
 \subsection*{Balancing the benchmark}
 
 At this stage, the benchmark was quite imbalanced, in the sense that some species had a much larger number of associated PSMs.
 We therefore used a random downsampling procedure to produce a benchmark that is more evenly balanced across species.
-Among the nine species, the one with the fewest PSMs is \textit{Mus musculus}, with \edit{25,522}.
+Among the nine species, the one with the fewest PSMs is \textit{Mus musculus}, with 25,522.
 Downsampling all of the other eight species to have 25,000 PSMs would reduce the size of the dataset from 2.8 million PSMs to 225,000---a reduction of 92\%.
 To avoid producing such a small dataset, we therefore opted to downsample each dataset to approximately 100,000 PSMs.
-This approach yields a slight imbalance, because three species have fewer than 100,000 PSMs (\edit{44,555} for \textit{H.\ sapiens} and \edit{82,514} for \textit{Candidatus endoloripes}), while retaining a larger percentage of the original data.
+This approach yields a slight imbalance, because three species have fewer than 100,000 PSMs (44,555 for \textit{H.\ sapiens} and 82,514 for \textit{Candidatus endoloripes}), while retaining a larger percentage of the original data.
 Our downsampling procedure involved randomly permuting the order of the MGF files for each species and then selecting the files in order until at least 100,000 PSMs have been accepted.
-The final, balanced benchmark dataset is approximately one quarter the size of the main benchmark, consisting of \edit{779,879} PSMs from \edit{133,232} distinct peptides.
+The final, balanced benchmark dataset is approximately one quarter the size of the main benchmark, consisting of 779,879 PSMs from 133,232 distinct peptides.
 
 \section*{Data Records}
 
@@ -215,27 +184,12 @@ The dataset contains files resulting from various steps in the generation of the
 \item Reference proteome files in FASTA format, downloaded from UniProt.
 \item Search results files for both targets and decoys, in tab-delimited format, produced by Tide.
 \item PSM-level Percolator results files for targets, in tab-delimited format.
-`\item Annotated MGF \edit{and corresponding mzSpecLib \cite{klein2024proteomics}} files for both versions of the benchmark (main and balanced).
+`\item Annotated MGF and corresponding mzSpecLib \cite{klein2024proteomics} files for both versions of the benchmark (main and balanced).
 \end{itemize}
 Also included are log files for the steps of the analysis pipeline carried out using Crux \cite{park2008rapid} (Tide indexing, Tide search, and Percolator).
 The data is available at \url{https://doi.org/10.5281/zenodo.12819175}.
 
 \section*{Technical Validation}
-
-\begin{figure}
-  \centering
-  \begin{tabular}{lll}
-    \includegraphics[height=4in]{nine-species-fdrs.pdf} &
-    \includegraphics[height=4in]{percent-id.pdf}  &
-    \includegraphics[height=4in]{match-by.pdf}  \\
-    a & b & c \\
-  \end{tabular}
-  \caption{\textbf{Validation of the benchmarks.}
-    \textbf{a.} Each series indicates, for a given species, the number of accepted PSMs as a function of PSM-level FDR.
-    \textbf{b.} The bar plot indicates the proportion of spectra that were accepted at 1\% PSM-level FDR per species.
-    \textbf{c.} Each histogram shows, for one species, the distribution of the proportion of total ion current that is matched by b- or y-ions per accepted PSM, using a matching tolerance of 0.05~\textit{m/z}.}
-  \label{fig:fdr}
-\end{figure}
 
 Data quality and interpretability varies dramatically from study to study, due to differences in sample type, sample preparation protocols, chromatography and instrument settings, and database size.
 To assess the overall rate of successful identification of spectra in each data set, we plotted the number of accepted PSMs as a function of PSM-level FDR threshold (Figure~\ref{fig:fdr}a).
@@ -253,9 +207,35 @@ All code required to generate the various benchmarks and to produce the figures 
 
 \paragraph{Author Contributions}
 WSN prepared the dataset, performed the validation experiments, and wrote the manuscript.
-\edit{BW edited the manuscript and wrote the code to convert MGF to mzSpecLib.}
+BW edited the manuscript and wrote the code to convert MGF to mzSpecLib.
 
 \paragraph{Competing Interests}
 The authors declare that they have no competing interests.
-  
+
+\paragraph{Acknowledgments}
+This work was supported by NSF award 2245300.
+
+\clearpage
+\pagestyle{empty}
+
+\begin{figure}
+  \centering
+  \caption{\textbf{Validation of the benchmarks.}
+    \textbf{a.} Each series indicates, for a given species, the number of accepted PSMs as a function of PSM-level FDR.
+    \textbf{b.} The bar plot indicates the proportion of spectra that were accepted at 1\% PSM-level FDR per species.
+    \textbf{c.} Each histogram shows, for one species, the distribution of the proportion of total ion current that is matched by b- or y-ions per accepted PSM, using a matching tolerance of 0.05~\textit{m/z}.}
+  \label{fig:fdr}
+\end{figure}
+
+
+\clearpage
+
+  \begin{tabular}{lll}
+    \includegraphics[height=4in]{nine-species-fdrs.pdf} &
+    \includegraphics[height=4in]{percent-id.pdf}  &
+    \includegraphics[height=4in]{match-by.pdf}  \\
+    a & b & c \\
+  \end{tabular}
+
+
 \end{document}
