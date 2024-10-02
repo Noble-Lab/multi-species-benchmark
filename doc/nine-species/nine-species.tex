@@ -85,31 +85,31 @@ PRIDE & Species & UniProt & Files & Spectra &
 & & & & & PSM & Pep  & PSM & Pep  \\
 \hline
 PXD005025 \cite{paiva2016label} & \textit{Vigna mungo} & UP000087766 & 24 & 932,848 &
-\edit{108,402} & \edit{11,638} & \edit{102,255} & \edit{11,557}
+108,402 & 11,638 & 102,255 & 11,557
 & 20 & 0.05 \\
 PXD004948 \cite{nevo2017impact} & \textit{Mus musculus} & UP000000589 & 13 & 306,786 & 
-\edit{25,522} & \edit{5630} & \edit{25,522} & \edit{5630}
+25,522 & 5630 & 25,522 & 5630
 & 10 & 0.05 \\
 PXD004325 \cite{cassidy2016combination} & \textit{Methanosarcina mazei} & UP000033058  & 72 & 3,728,183 &
-\edit{267,183} & \edit{15,220} & \edit{100,485} & \edit{11,934}
+267,183 & 15,220 & 100,485 & 11,934
 & 10 & 0.05 \\
 PXD004565 \cite{reuss2017large} & \textit{Bacillus subtilis} & UP000001570 & 106 & 4,336,428 &
-\edit{1,351,938} & \edit{28,364} & \edit{113,234} & \edit{17,481}
+1,351,938 & 28,364 & 113,234 & 17,481
 & 30 & 0.05 \\
 PXD004536 \cite{petersen2016chemosynthetic} & \textit{Candidatus endoloripes} & UP000094849 & 11 & 2,272,023 &
-\edit{82,514} & \edit{8080} & \edit{82,514} & \edit{8080}
+82,514 & 8080 & 82,514 & 8080
 & 20 & 0.05 \\
 PXD004947 \cite{mata2017depth} & \textit{Solanum lycopersicum} & UP000004994 & 60 & 603,506 &
-\edit{177,553} & \edit{48,459} & \edit{100,056} & \edit{35,787}
+177,553 & 48,459 & 100,056 & 35,787
 & 15 & 0.05 \\
 PXD003868 \cite{seidel2017quantitative} & \textit{Saccharomyces-cerevisiae} & UP000002311 & 27 & 1,477,397 &
-\edit{585,846} & \edit{19,102} & \edit{108,973} & \edit{13,285}
+585,846 & 19,102 & 108,973 & 13,285
 & 20 & 0.05 \\
 PXD004467 \cite{hu2016proteome} & \textit{Apis mellifera} & UP000005203 & 17 & 823,169 &
-\edit{194,604} & \edit{21,081} & \edit{102,285} & \edit{18,630}
+194,604 & 21,081 & 102,285 & 18,630
 & 20 & 0.05 \\
 PXD004424 \cite{cypryk2017proteomic} & \textit{H.\ sapiens} & UP000005640 & 26 & 684,821 &
-\edit{44,555} & \edit{10,848} & \edit{44,555} & \edit{10,848}
+44,555 & 10,848 & 44,555 & 10,848
 & 20 & 0.02 \\
 \hline
 Total & & & 343 & 15,165,161  & 2,838,117 & 168,422 & 779,879 & 133,232 \\
@@ -178,16 +178,16 @@ The final, balanced benchmark dataset is approximately one quarter the size of t
 
 \section*{Data Records}
 
-The dataset \cite{noble2024benchmark} contains files resulting from various steps in the generation of the benchmark:
+The dataset \cite{wen2024multi-species2} contains files resulting from various steps in the generation of the benchmark:
 \begin{itemize}
 \item Spectrum files in MGF format, produced by ThermoRawFileParser.
 \item Reference proteome files in FASTA format, downloaded from UniProt.
 \item Search results files for both targets and decoys, in tab-delimited format, produced by Tide.
 \item PSM-level Percolator results files for targets, in tab-delimited format.
-`\item Annotated MGF and corresponding mzSpecLib \cite{klein2024proteomics} files for both versions of the benchmark (main and balanced).
+\item Annotated MGF and corresponding mzSpecLib \cite{klein2024proteomics} files for both versions of the benchmark (main and balanced).
 \end{itemize}
 Also included are log files for the steps of the analysis pipeline carried out using Crux \cite{park2008rapid} (Tide indexing, Tide search, and Percolator).
-The data \cite{noble2024benchmark} is available at \url{https://doi.org/10.5281/zenodo.13685813}.
+The data is available at \url{https://doi.org/10.5281/zenodo.13685813}.
 
 \section*{Technical Validation}
 
