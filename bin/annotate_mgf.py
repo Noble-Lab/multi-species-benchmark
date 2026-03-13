@@ -116,10 +116,20 @@ def main():
 
                 # Add to this spectrum, possibly including annotation.
                 this_spectrum += line
+
                 words = line.split("=")
                 if (words[0] == "SCANS"):
                     scan_number = int(words[1])
                     if (scan_number in psms):
+                        # Strip flanking amino acids.
+                        this_spectrum += f"SEQ={psms[scan_number][2:-2]}\n"
+                        print_me = True
+
+                # Ugly hack to extract scan number from title line.
+                if (words[0] == "TITLE"):
+                    scan_number = int(words[-1][:-2]) # Strip trailing "
+                    if (scan_number in psms):
+                        this_spectrum += f"SCANS={scan_number}\n"
                         # Strip flanking amino acids.
                         this_spectrum += f"SEQ={psms[scan_number][2:-2]}\n"
                         print_me = True
